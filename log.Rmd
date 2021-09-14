@@ -1,0 +1,33 @@
+---
+title: "Heart Disease"
+author: "Sander"
+date: "9/14/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+```
+
+## R Markdown
+
+```{r parsedata}
+heartdata <- read.csv("data/heart.csv")
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+diseased_age <- table(heartdata$Age, heartdata$HeartDisease)
+percentage <- as.data.frame.matrix(diseased_age) 
+colnames(percentage) <- c("Not-diseased", "Diseased")
+percentage$Age <- rownames(percentage)
+rownames(percentage) <- c()
+percentage$Ratio <-100 / (percentage$`Not-diseased` + percentage$Diseased)  * percentage$Diseased
+ggplot(percentage, aes(x=Age, y=Ratio)) + geom_point(aes(Age, Ratio)) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + geom_smooth(method = "lm", se = FALSE)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
