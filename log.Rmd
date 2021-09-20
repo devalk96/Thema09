@@ -8,26 +8,56 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
+library(kableExtra)
+library(scales)
 ```
 
-## R Markdown
+# Logbook
 
+Kaggle direct link to dataset: https://www.kaggle.com/fedesoriano/heart-failure-prediction
+
+Hypothesis: Is it possible to create an accurate model that gives a prediction of the chance of developing heartdisease using various parameters.
+\newpage
+
+## EDA
 ```{r parsedata}
-heartdata <- read.csv("data/heart.csv")
+heartdata <- read.table("data/heart.csv", sep=",", header=TRUE)
+```
+```{r Summary}
+summ <- summary(heartdata[c("Age", "RestingBP", "Cholesterol", "FastingBS", "MaxHR", "Oldpeak")])
+tab <- sub('.*:', '', summ)
+rownames(tab) <- c("Min", "1st. Qu", "Median", "Mean", "3rd. Qu", "Max")
+kable(tab, caption = "5 num of numerical valies") %>% 
+  kable_styling(latex_options="scale_down")
+```
+```{r datapoints per age}
+# counts (or sums of weights)
+ggplot(heartdata, aes(Sex)) + geom_bar(fill=hue_pal()(2)) + labs(
+  title = "Datapoints/Sex",
+)  + ylab("Datapoints")
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+```{r heartdisease rate per age}
+ggplot(heartdata) + geom_smooth(aes(Age, HeartDisease))
+```
 
 ```{r pressure, echo=FALSE}
+
+everysecond <- function(x){
+  x <- sort(unique(x))
+  x[seq(2, length(x), 2)] <- ""
+  x
+}
+
+
 diseased_age <- table(heartdata$Age, heartdata$HeartDisease)
 percentage <- as.data.frame.matrix(diseased_age) 
 colnames(percentage) <- c("Not-diseased", "Diseased")
 percentage$Age <- rownames(percentage)
 rownames(percentage) <- c()
 percentage$Ratio <-100 / (percentage$`Not-diseased` + percentage$Diseased)  * percentage$Diseased
-ggplot(percentage, aes(x=Age, y=Ratio)) + geom_point(aes(Age, Ratio)) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + geom_smooth(method = "lm", se = FALSE)
-```
+ggplot(percentage, aes(x=Age, y=Ratio)) + geom_point(aes(Age, Ratio, size = `Not-diseased` + Diseased)) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(title = "Heart disease accurance with age", x = "Age (years)", y = "Percentage diseased", size = "Datasamples per age") + scale_x_discrete(labels = everysecond(percentage$Age)) +
+  scale_size_continuous(range = c(0, 10))
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```
