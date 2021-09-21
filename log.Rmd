@@ -16,7 +16,7 @@ library(scales)
 
 Kaggle direct link to dataset: https://www.kaggle.com/fedesoriano/heart-failure-prediction
 
-Hypothesis: Is it possible to create an accurate model that gives a prediction of the chance of developing heartdisease using various parameters.
+Research question: Is it possible to create an accurate model that gives a prediction of the chance of developing heartdisease using various parameters?
 \newpage
 
 ## EDA
