@@ -1,0 +1,10 @@
+name,parameters,accuracy,incorrect
+NaiveBayes,weka.classifiers.bayes.NaiveBayes ,85.7298,14.2702
+OneR,weka.classifiers.rules.OneR -B 6,81.3725,18.6275
+ZeroR,weka.classifiers.rules.ZeroR ,55.3377,44.6623
+IBk,"weka.classifiers.lazy.IBk -K 1 -W 0 -A ""weka.core.neighboursearch.LinearNNSearch -A \""weka.core.EuclideanDistance -R first-last\""""",,
+adaboostm1,weka.classifiers.meta.AdaBoostM1 -P 100 -S 1 -I 10 -W weka.classifiers.trees.DecisionStump,84.6405,15.3595
+j48,weka.classifiers.trees.J48 -C 0.25 -M 15,85.7298,14.2702
+SimpleLogistic,weka.classifiers.functions.SimpleLogistic -I 0 -M 500 -H 50 -W 0.0,86.0566,13.9434
+RandomTree,weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1,79.9564,20.0436
+SMO,"weka.classifiers.functions.SMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K ""weka.classifiers.functions.supportVector.PolyKernel -E 1.0 -C 250007"" -calibrator ""weka.classifiers.functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4""",86.3834,13.6166

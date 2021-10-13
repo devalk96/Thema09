@@ -1,0 +1,27 @@
+Tester:     weka.experiment.PairedCorrectedTTester -G 4,5,6 -D 1 -R 2 -S 0.05 -result-matrix "weka.experiment.ResultMatrixPlainText -mean-prec 2 -stddev-prec 2 -col-name-width 0 -row-name-width 25 -mean-width 0 -stddev-width 0 -sig-width 0 -count-width 5 -print-col-names -print-row-names -enum-col-names"
+Analysing:  Percent_correct
+Datasets:   1
+Resultsets: 9
+Confidence: 0.05 (two tailed)
+Sorted by:  -
+Date:       12/10/2021, 13:15
+
+
+Dataset                   (1) rules.Ze | (2) rules (3) trees (4) trees (5) meta. (6) funct (7) funct (8) bayes (9) lazy.
+------------------------------------------------------------------------------------------------------------------------
+R_data_frame             (1000   55.36 |   81.37 v   83.35 v   79.89 v   86.03 v   86.00 v   85.76 v   85.33 v   79.24 v
+------------------------------------------------------------------------------------------------------------------------
+                               (v/ /*) |   (1/0/0)   (1/0/0)   (1/0/0)   (1/0/0)   (1/0/0)   (1/0/0)   (1/0/0)   (1/0/0)
+
+
+Key:
+(1) rules.ZeroR '' 48055541465867954
+(2) rules.OneR '-B 6' -3459427003147861443
+(3) trees.J48 '-C 0.25 -M 2' -217733168393644444
+(4) trees.RandomTree '-K 0 -M 1.0 -V 0.001 -S 1' -9051119597407396024
+(5) meta.AdaBoostM1 '-P 100 -S 1 -I 10 -W trees.DecisionStump' -1178107808933117974
+(6) functions.SMO '-C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"functions.supportVector.PolyKernel -E 1.0 -C 250007\" -calibrator \"functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4\"' -6585883636378691736
+(7) functions.SimpleLogistic '-I 0 -M 500 -H 50 -W 0.0' 7397710626304705059
+(8) bayes.NaiveBayes '' 5995231201785697655
+(9) lazy.IBk '-K 1 -W 0 -A \"weka.core.neighboursearch.LinearNNSearch -A \\\"weka.core.EuclideanDistance -R first-last\\\"\"' -3080186098777067172
+

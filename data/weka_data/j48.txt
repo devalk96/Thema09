@@ -1,0 +1,75 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.J48 -C 0.25 -M 15
+Relation:     heart_cleaned-weka.filters.unsupervised.attribute.Remove-R3-weka.filters.unsupervised.attribute.Remove-R10-weka.filters.unsupervised.attribute.Discretize-B4-M-1.0-R1-precision6-weka.filters.unsupervised.attribute.Discretize-B4-M-1.0-R4-precision6-weka.filters.unsupervised.attribute.Discretize-B5-M-1.0-R7-precision6-weka.filters.unsupervised.attribute.Discretize-B5-M-1.0-R9-precision6
+Instances:    918
+Attributes:   17
+              Age
+              Sex
+              RestingBP
+              Cholesterol
+              FastingBS
+              RestingECG
+              MaxHR
+              ExerciseAngina
+              Oldpeak
+              HeartDisease
+              ASY
+              ATA
+              NAP
+              TA
+              ST_Slope_Flat
+              ST_Slope_Down
+              ST_Slope_Up
+Test mode:    100-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+J48 pruned tree
+------------------
+
+ST_Slope_Up = TRUE
+|   ASY = FALSE: FALSE (263.0/17.0)
+|   ASY = TRUE
+|   |   FastingBS = FALSE
+|   |   |   ExerciseAngina = FALSE: FALSE (72.0/17.0)
+|   |   |   ExerciseAngina = TRUE: TRUE (31.0/10.0)
+|   |   FastingBS = TRUE: TRUE (29.0/6.0)
+ST_Slope_Up = FALSE
+|   Sex = M: TRUE (441.0/55.0)
+|   Sex = F
+|   |   ASY = FALSE: FALSE (33.0/9.0)
+|   |   ASY = TRUE: TRUE (49.0/14.0)
+
+Number of Leaves  : 	7
+
+Size of the tree : 	13
+
+
+Time taken to build model: 0 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         787               85.7298 %
+Incorrectly Classified Instances       131               14.2702 %
+Kappa statistic                          0.7082
+Mean absolute error                      0.2355
+Root mean squared error                  0.3481
+Relative absolute error                 47.6494 %
+Root relative squared error             70.0285 %
+Total Number of Instances              918     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.785    0.085    0.882      0.785    0.831      0.712    0.829     0.801     FALSE
+                 0.915    0.215    0.841      0.915    0.877      0.712    0.829     0.777     TRUE
+Weighted Avg.    0.857    0.157    0.859      0.857    0.856      0.712    0.829     0.787     
+
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+ 322  88 |   a = FALSE
+  43 465 |   b = TRUE
+

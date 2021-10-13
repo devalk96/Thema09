@@ -1,0 +1,29 @@
+Tester:     weka.experiment.PairedCorrectedTTester -G 4,5,6 -D 1 -R 2 -S 0.05 -result-matrix "weka.experiment.ResultMatrixHTML -mean-prec 2 -stddev-prec 2 -col-name-width 0 -row-name-width 25 -mean-width 0 -stddev-width 0 -sig-width 0 -count-width 0 -print-row-names -enum-col-names"
+Analysing:  Percent_correct
+Datasets:   1
+Resultsets: 9
+Confidence: 0.05 (two tailed)
+Sorted by:  Percent_correct
+Date:       07/10/2021, 14:43
+
+
+<table border="1" cellpadding="3" cellspacing="0">
+   <tr><td><b>Dataset</b></td><td align="center" colspan="1"><b>(1)</b></td><td align="center" colspan="2"><b>(2)</b></td><td align="center" colspan="2"><b>(3)</b></td><td align="center" colspan="2"><b>(4)</b></td><td align="center" colspan="2"><b>(5)</b></td><td align="center" colspan="2"><b>(6)</b></td><td align="center" colspan="2"><b>(7)</b></td><td align="center" colspan="2"><b>(8)</b></td><td align="center" colspan="2"><b>(9)</b></td></tr>
+   <tr><td>R_data_frame</td><td align="right">55.36</td><td align="right">81.37</td><td align="center">v</td><td align="right">83.35</td><td align="center">v</td><td align="right">79.89</td><td align="center">v</td><td align="right">86.03</td><td align="center">v</td><td align="right">86.00</td><td align="center">v</td><td align="right">85.76</td><td align="center">v</td><td align="right">85.33</td><td align="center">v</td><td align="right">79.24</td><td align="center">v</td></tr>
+   <tr><td>(v/ /*)</td><td align="right">&nbsp;</td><td align="right">&nbsp;</td><td align="center">(1/0/0)</td><td align="right">&nbsp;</td><td align="center">(1/0/0)</td><td align="right">&nbsp;</td><td align="center">(1/0/0)</td><td align="right">&nbsp;</td><td align="center">(1/0/0)</td><td align="right">&nbsp;</td><td align="center">(1/0/0)</td><td align="right">&nbsp;</td><td align="center">(1/0/0)</td><td align="right">&nbsp;</td><td align="center">(1/0/0)</td><td align="right">&nbsp;</td><td align="center">(1/0/0)</td></tr>
+</table>
+
+
+<table border="1" cellpadding="3" cellspacing="0">
+   <tr><td colspan="2"><b>Key</b></td></tr>
+   <tr><td><b>(1)</b></td><td>rules.ZeroR '' 48055541465867954</td></tr>
+   <tr><td><b>(2)</b></td><td>rules.OneR '-B 6' -3459427003147861443</td></tr>
+   <tr><td><b>(3)</b></td><td>trees.J48 '-C 0.25 -M 2' -217733168393644444</td></tr>
+   <tr><td><b>(4)</b></td><td>trees.RandomTree '-K 0 -M 1.0 -V 0.001 -S 1' -9051119597407396024</td></tr>
+   <tr><td><b>(5)</b></td><td>meta.AdaBoostM1 '-P 100 -S 1 -I 10 -W trees.DecisionStump' -1178107808933117974</td></tr>
+   <tr><td><b>(6)</b></td><td>functions.SMO '-C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"functions.supportVector.PolyKernel -E 1.0 -C 250007\" -calibrator \"functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4\"' -6585883636378691736</td></tr>
+   <tr><td><b>(7)</b></td><td>functions.SimpleLogistic '-I 0 -M 500 -H 50 -W 0.0' 7397710626304705059</td></tr>
+   <tr><td><b>(8)</b></td><td>bayes.NaiveBayes '' 5995231201785697655</td></tr>
+   <tr><td><b>(9)</b></td><td>lazy.IBk '-K 1 -W 0 -A \"weka.core.neighboursearch.LinearNNSearch -A \\\"weka.core.EuclideanDistance -R first-last\\\"\"' -3080186098777067172</td></tr>
+</table>
+

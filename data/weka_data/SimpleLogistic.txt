@@ -1,0 +1,69 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.functions.SimpleLogistic -I 0 -M 500 -H 50 -W 0.0
+Relation:     heart_cleaned-weka.filters.unsupervised.attribute.Remove-R3-weka.filters.unsupervised.attribute.Remove-R10-weka.filters.unsupervised.attribute.Discretize-B4-M-1.0-R1-precision6-weka.filters.unsupervised.attribute.Discretize-B4-M-1.0-R4-precision6-weka.filters.unsupervised.attribute.Discretize-B5-M-1.0-R7-precision6-weka.filters.unsupervised.attribute.Discretize-B5-M-1.0-R9-precision6-weka.filters.unsupervised.attribute.Discretize-B5-M-1.0-R3-precision6
+Instances:    918
+Attributes:   17
+              Age
+              Sex
+              RestingBP
+              Cholesterol
+              FastingBS
+              RestingECG
+              MaxHR
+              ExerciseAngina
+              Oldpeak
+              HeartDisease
+              ASY
+              ATA
+              NAP
+              TA
+              ST_Slope_Flat
+              ST_Slope_Down
+              ST_Slope_Up
+Test mode:    100-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+SimpleLogistic:
+
+Class FALSE :
+1.18 + 
+[Sex=F] * 0.71 +
+[Cholesterol='(-inf-150.75]'] * -0.61 +
+[ExerciseAngina=TRUE] * -0.47 +
+[ASY=TRUE] * -0.84 +
+[ST_Slope_Up=FALSE] * -1.25
+
+Class TRUE :
+-1.18 + 
+[Sex=F] * -0.71 +
+[Cholesterol='(-inf-150.75]'] * 0.61 +
+[ExerciseAngina=TRUE] * 0.47 +
+[ASY=TRUE] * 0.84 +
+[ST_Slope_Up=FALSE] * 1.25
+
+
+Time taken to build model: 0.24 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         790               86.0566 %
+Incorrectly Classified Instances       128               13.9434 %
+Kappa statistic                          0.7166
+Mean absolute error                      0.2063
+Root mean squared error                  0.3244
+Relative absolute error                 41.7269 %
+Root relative squared error             65.2603 %
+Coverage of cases (0.95 level)          98.6928 %
+Mean rel. region size (0.95 level)      85.1307 %
+Total Number of Instances              918     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.820    0.106    0.862      0.820    0.840      0.717    0.922     0.915     FALSE
+                 0.894    0.180    0.860      0.894    0.876      0.717    0.922     0.926     TRUE
+Weighted Avg.    0.861    0.147    0.861      0.861    0.860      0.717    0.922     0.921     
+

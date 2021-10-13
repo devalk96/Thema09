@@ -1,0 +1,285 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.meta.AdaBoostM1 -P 100 -S 1 -I 10 -W weka.classifiers.trees.DecisionStump
+Relation:     heart_cleaned-weka.filters.unsupervised.attribute.Remove-R3-weka.filters.unsupervised.attribute.Remove-R10-weka.filters.unsupervised.attribute.Discretize-B4-M-1.0-R1-precision6-weka.filters.unsupervised.attribute.Discretize-B4-M-1.0-R4-precision6-weka.filters.unsupervised.attribute.Discretize-B5-M-1.0-R7-precision6-weka.filters.unsupervised.attribute.Discretize-B5-M-1.0-R9-precision6-weka.filters.unsupervised.attribute.Discretize-B5-M-1.0-R3-precision6
+Instances:    918
+Attributes:   17
+              Age
+              Sex
+              RestingBP
+              Cholesterol
+              FastingBS
+              RestingECG
+              MaxHR
+              ExerciseAngina
+              Oldpeak
+              HeartDisease
+              ASY
+              ATA
+              NAP
+              TA
+              ST_Slope_Flat
+              ST_Slope_Down
+              ST_Slope_Up
+Test mode:    100-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+AdaBoostM1: Base classifiers and their weights: 
+
+Decision Stump
+
+Classifications
+
+ST_Slope_Up = TRUE : FALSE
+ST_Slope_Up != TRUE : TRUE
+ST_Slope_Up is missing : TRUE
+
+Class distributions
+
+ST_Slope_Up = TRUE
+FALSE	TRUE	
+0.8025316455696202	0.19746835443037974	
+ST_Slope_Up != TRUE
+FALSE	TRUE	
+0.17782026768642448	0.8221797323135756	
+ST_Slope_Up is missing
+FALSE	TRUE	
+0.4466230936819172	0.5533769063180828	
+
+
+Weight: 1.47
+
+Decision Stump
+
+Classifications
+
+ASY = TRUE : TRUE
+ASY != TRUE : FALSE
+ASY is missing : TRUE
+
+Class distributions
+
+ASY = TRUE
+FALSE	TRUE	
+0.2647668393782386	0.7352331606217615	
+ASY != TRUE
+FALSE	TRUE	
+0.7457129615325196	0.25428703846748035	
+ASY is missing
+FALSE	TRUE	
+0.4841118861410556	0.5158881138589445	
+
+
+Weight: 1.05
+
+Decision Stump
+
+Classifications
+
+Sex = F : FALSE
+Sex != F : TRUE
+Sex is missing : FALSE
+
+Class distributions
+
+Sex = F
+FALSE	TRUE	
+0.8013394648481503	0.19866053515184967	
+Sex != F
+FALSE	TRUE	
+0.4165720831239203	0.5834279168760796	
+Sex is missing
+FALSE	TRUE	
+0.5067562577939407	0.49324374220605927	
+
+
+Weight: 0.55
+
+Decision Stump
+
+Classifications
+
+Cholesterol = '(-inf-150.75]' : TRUE
+Cholesterol != '(-inf-150.75]' : FALSE
+Cholesterol is missing : FALSE
+
+Class distributions
+
+Cholesterol = '(-inf-150.75]'
+FALSE	TRUE	
+0.2795284536189817	0.7204715463810183	
+Cholesterol != '(-inf-150.75]'
+FALSE	TRUE	
+0.6619570543569803	0.33804294564301973	
+Cholesterol is missing
+FALSE	TRUE	
+0.5843091617380497	0.4156908382619503	
+
+
+Weight: 0.73
+
+Decision Stump
+
+Classifications
+
+FastingBS = FALSE : FALSE
+FastingBS != FALSE : TRUE
+FastingBS is missing : TRUE
+
+Class distributions
+
+FastingBS = FALSE
+FALSE	TRUE	
+0.5366604393747675	0.46333956062523257	
+FastingBS != FALSE
+FALSE	TRUE	
+0.2533778383713367	0.7466221616286634	
+FastingBS is missing
+FALSE	TRUE	
+0.47845924871432577	0.5215407512856742	
+
+
+Weight: 0.32
+
+Decision Stump
+
+Classifications
+
+ExerciseAngina = FALSE : FALSE
+ExerciseAngina != FALSE : TRUE
+ExerciseAngina is missing : TRUE
+
+Class distributions
+
+ExerciseAngina = FALSE
+FALSE	TRUE	
+0.5097258035792483	0.49027419642075165	
+ExerciseAngina != FALSE
+FALSE	TRUE	
+0.30888934605158336	0.6911106539484166	
+ExerciseAngina is missing
+FALSE	TRUE	
+0.4296592655349706	0.5703407344650294	
+
+
+Weight: 0.33
+
+Decision Stump
+
+Classifications
+
+RestingBP = '(40-80]' : FALSE
+RestingBP != '(40-80]' : TRUE
+RestingBP is missing : TRUE
+
+Class distributions
+
+RestingBP = '(40-80]'
+FALSE	TRUE	
+1.0	0.0	
+RestingBP != '(40-80]'
+FALSE	TRUE	
+0.40336825047307423	0.5966317495269258	
+RestingBP is missing
+FALSE	TRUE	
+0.4106267605192017	0.5893732394807983	
+
+
+Weight: 0.41
+
+Decision Stump
+
+Classifications
+
+ST_Slope_Flat = FALSE : TRUE
+ST_Slope_Flat != FALSE : FALSE
+ST_Slope_Flat is missing : FALSE
+
+Class distributions
+
+ST_Slope_Flat = FALSE
+FALSE	TRUE	
+0.49107567930932805	0.508924320690672	
+ST_Slope_Flat != FALSE
+FALSE	TRUE	
+0.7182525629740891	0.2817474370259108	
+ST_Slope_Flat is missing
+FALSE	TRUE	
+0.5101122383840063	0.4898877616159937	
+
+
+Weight: 0.11
+
+Decision Stump
+
+Classifications
+
+FastingBS = FALSE : FALSE
+FastingBS != FALSE : TRUE
+FastingBS is missing : FALSE
+
+Class distributions
+
+FastingBS = FALSE
+FALSE	TRUE	
+0.5613630595831556	0.43863694041684453	
+FastingBS != FALSE
+FALSE	TRUE	
+0.4031242201054164	0.5968757798945836	
+FastingBS is missing
+FALSE	TRUE	
+0.5322324017125404	0.46776759828745956	
+
+
+Weight: 0.27
+
+Decision Stump
+
+Classifications
+
+ST_Slope_Flat = FALSE : TRUE
+ST_Slope_Flat != FALSE : FALSE
+ST_Slope_Flat is missing : TRUE
+
+Class distributions
+
+ST_Slope_Flat = FALSE
+FALSE	TRUE	
+0.4716482770745577	0.5283517229254423	
+ST_Slope_Flat != FALSE
+FALSE	TRUE	
+0.6805352240318154	0.31946477596818457	
+ST_Slope_Flat is missing
+FALSE	TRUE	
+0.48913134363805855	0.5108686563619413	
+
+
+Weight: 0.16
+
+Number of performed Iterations: 10
+
+
+Time taken to build model: 0 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         777               84.6405 %
+Incorrectly Classified Instances       141               15.3595 %
+Kappa statistic                          0.6885
+Mean absolute error                      0.2029
+Root mean squared error                  0.3238
+Relative absolute error                 41.0444 %
+Root relative squared error             65.1228 %
+Coverage of cases (0.95 level)          98.6928 %
+Mean rel. region size (0.95 level)      84.4227 %
+Total Number of Instances              918     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.815    0.128    0.837      0.815    0.826      0.689    0.923     0.912     FALSE
+                 0.872    0.185    0.854      0.872    0.863      0.689    0.923     0.930     TRUE
+Weighted Avg.    0.846    0.160    0.846      0.846    0.846      0.689    0.923     0.922     
+

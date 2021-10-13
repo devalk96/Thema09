@@ -1,0 +1,152 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.bayes.NaiveBayes 
+Relation:     heart_cleaned-weka.filters.unsupervised.attribute.Remove-R3-weka.filters.unsupervised.attribute.Remove-R10-weka.filters.unsupervised.attribute.Discretize-B4-M-1.0-R1-precision6-weka.filters.unsupervised.attribute.Discretize-B4-M-1.0-R4-precision6-weka.filters.unsupervised.attribute.Discretize-B5-M-1.0-R7-precision6-weka.filters.unsupervised.attribute.Discretize-B5-M-1.0-R9-precision6-weka.filters.unsupervised.attribute.Discretize-B5-M-1.0-R3-precision6
+Instances:    918
+Attributes:   17
+              Age
+              Sex
+              RestingBP
+              Cholesterol
+              FastingBS
+              RestingECG
+              MaxHR
+              ExerciseAngina
+              Oldpeak
+              HeartDisease
+              ASY
+              ATA
+              NAP
+              TA
+              ST_Slope_Flat
+              ST_Slope_Down
+              ST_Slope_Up
+Test mode:    100-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+Naive Bayes Classifier
+
+                      Class
+Attribute             FALSE   TRUE
+                     (0.45) (0.55)
+===================================
+Age
+  '(-inf-40.25]'        62.0   33.0
+  '(40.25-52.5]'       168.0  128.0
+  '(52.5-64.75]'       152.0  278.0
+  '(64.75-inf)'         32.0   73.0
+  [total]              414.0  512.0
+
+Sex
+  M                    268.0  459.0
+  F                    144.0   51.0
+  [total]              412.0  510.0
+
+RestingBP
+  '(-inf-40]'            1.0    2.0
+  '(40-80]'              2.0    1.0
+  '(80-120]'           150.0  143.0
+  '(120-160]'          249.0  335.0
+  '(160-inf)'           13.0   32.0
+  [total]              415.0  513.0
+
+Cholesterol
+  '(-inf-150.75]'       31.0  163.0
+  '(150.75-301.5]'     333.0  292.0
+  '(301.5-452.25]'      46.0   51.0
+  '(452.25-inf)'         4.0    6.0
+  [total]              414.0  512.0
+
+FastingBS
+  FALSE                367.0  339.0
+  TRUE                  45.0  171.0
+  [total]              412.0  510.0
+
+RestingECG
+  Normal               268.0  286.0
+  ST                    62.0  118.0
+  LVH                   83.0  107.0
+  [total]              413.0  511.0
+
+MaxHR
+  '(-inf-88.4]'          5.0   24.0
+  '(88.4-116.8]'        41.0  136.0
+  '(116.8-145.2]'      136.0  233.0
+  '(145.2-173.6]'      176.0  106.0
+  '(173.6-inf)'         57.0   14.0
+  [total]              415.0  513.0
+
+ExerciseAngina
+  FALSE                356.0  193.0
+  TRUE                  56.0  317.0
+  [total]              412.0  510.0
+
+Oldpeak
+  '(-inf--0.84]'         2.0    7.0
+  '(-0.84-0.92]'       320.0  174.0
+  '(0.92-2.68]'         86.0  271.0
+  '(2.68-4.44]'          6.0   57.0
+  '(4.44-inf)'           1.0    4.0
+  [total]              415.0  513.0
+
+ASY
+  FALSE                307.0  117.0
+  TRUE                 105.0  393.0
+  [total]              412.0  510.0
+
+ATA
+  TRUE                 150.0   25.0
+  FALSE                262.0  485.0
+  [total]              412.0  510.0
+
+NAP
+  FALSE                280.0  437.0
+  TRUE                 132.0   73.0
+  [total]              412.0  510.0
+
+TA
+  FALSE                385.0  489.0
+  TRUE                  27.0   21.0
+  [total]              412.0  510.0
+
+ST_Slope_Flat
+  FALSE                397.0  460.0
+  TRUE                  15.0   50.0
+  [total]              412.0  510.0
+
+ST_Slope_Down
+  FALSE                332.0  128.0
+  TRUE                  80.0  382.0
+  [total]              412.0  510.0
+
+ST_Slope_Up
+  TRUE                 318.0   79.0
+  FALSE                 94.0  431.0
+  [total]              412.0  510.0
+
+
+
+Time taken to build model: 0 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         787               85.7298 %
+Incorrectly Classified Instances       131               14.2702 %
+Kappa statistic                          0.7106
+Mean absolute error                      0.1549
+Root mean squared error                  0.3424
+Relative absolute error                 31.3302 %
+Root relative squared error             68.8714 %
+Coverage of cases (0.95 level)          93.2462 %
+Mean rel. region size (0.95 level)      60.9477 %
+Total Number of Instances              918     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.827    0.118    0.850      0.827    0.838      0.711    0.922     0.916     FALSE
+                 0.882    0.173    0.863      0.882    0.872      0.711    0.922     0.927     TRUE
+Weighted Avg.    0.857    0.149    0.857      0.857    0.857      0.711    0.922     0.922     
+

@@ -1,0 +1,676 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     heart_cleaned-weka.filters.unsupervised.attribute.Remove-R3-weka.filters.unsupervised.attribute.Remove-R10-weka.filters.unsupervised.attribute.Discretize-B4-M-1.0-R1-precision6-weka.filters.unsupervised.attribute.Discretize-B4-M-1.0-R4-precision6-weka.filters.unsupervised.attribute.Discretize-B5-M-1.0-R7-precision6-weka.filters.unsupervised.attribute.Discretize-B5-M-1.0-R9-precision6
+Instances:    918
+Attributes:   17
+              Age
+              Sex
+              RestingBP
+              Cholesterol
+              FastingBS
+              RestingECG
+              MaxHR
+              ExerciseAngina
+              Oldpeak
+              HeartDisease
+              ASY
+              ATA
+              NAP
+              TA
+              ST_Slope_Flat
+              ST_Slope_Down
+              ST_Slope_Up
+Test mode:    100-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+
+RandomTree
+==========
+
+ST_Slope_Down = FALSE
+|   ExerciseAngina = FALSE
+|   |   Oldpeak = '(-inf--0.84]'
+|   |   |   Age = '(-inf-40.25]' : FALSE (1/0)
+|   |   |   Age = '(40.25-52.5]' : FALSE (0/0)
+|   |   |   Age = '(52.5-64.75]' : TRUE (1/0)
+|   |   |   Age = '(64.75-inf)' : FALSE (0/0)
+|   |   Oldpeak = '(-0.84-0.92]'
+|   |   |   ATA = TRUE
+|   |   |   |   Age = '(-inf-40.25]' : FALSE (25/0)
+|   |   |   |   Age = '(40.25-52.5]' : FALSE (54/0)
+|   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   Cholesterol = '(-inf-150.75]' : FALSE (4/0)
+|   |   |   |   |   Cholesterol = '(150.75-301.5]'
+|   |   |   |   |   |   RestingECG = Normal
+|   |   |   |   |   |   |   MaxHR = '(-inf-88.4]' : FALSE (0/0)
+|   |   |   |   |   |   |   MaxHR = '(88.4-116.8]' : FALSE (3/0)
+|   |   |   |   |   |   |   MaxHR = '(116.8-145.2]'
+|   |   |   |   |   |   |   |   Sex = M
+|   |   |   |   |   |   |   |   |   RestingBP < 122 : FALSE (3/0)
+|   |   |   |   |   |   |   |   |   RestingBP >= 122
+|   |   |   |   |   |   |   |   |   |   RestingBP < 131.5 : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   |   RestingBP >= 131.5 : FALSE (2/0)
+|   |   |   |   |   |   |   |   Sex = F : FALSE (2/0)
+|   |   |   |   |   |   |   MaxHR = '(145.2-173.6]' : FALSE (6/0)
+|   |   |   |   |   |   |   MaxHR = '(173.6-inf)' : FALSE (2/0)
+|   |   |   |   |   |   RestingECG = ST : FALSE (5/0)
+|   |   |   |   |   |   RestingECG = LVH
+|   |   |   |   |   |   |   FastingBS = FALSE
+|   |   |   |   |   |   |   |   MaxHR = '(-inf-88.4]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   MaxHR = '(88.4-116.8]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   MaxHR = '(116.8-145.2]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   MaxHR = '(145.2-173.6]'
+|   |   |   |   |   |   |   |   |   RestingBP < 142 : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   RestingBP >= 142 : TRUE (1/0)
+|   |   |   |   |   |   |   |   MaxHR = '(173.6-inf)' : TRUE (1/0)
+|   |   |   |   |   |   |   FastingBS = TRUE : FALSE (1/0)
+|   |   |   |   |   Cholesterol = '(301.5-452.25]'
+|   |   |   |   |   |   FastingBS = FALSE : FALSE (9/0)
+|   |   |   |   |   |   FastingBS = TRUE : TRUE (1/0)
+|   |   |   |   |   Cholesterol = '(452.25-inf)' : FALSE (1/0)
+|   |   |   |   Age = '(64.75-inf)' : FALSE (2/0)
+|   |   |   ATA = FALSE
+|   |   |   |   Cholesterol = '(-inf-150.75]'
+|   |   |   |   |   RestingBP < 132.5
+|   |   |   |   |   |   RestingECG = Normal
+|   |   |   |   |   |   |   NAP = FALSE
+|   |   |   |   |   |   |   |   ASY = FALSE : TRUE (1/0)
+|   |   |   |   |   |   |   |   ASY = TRUE
+|   |   |   |   |   |   |   |   |   FastingBS = FALSE
+|   |   |   |   |   |   |   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   |   Age = '(40.25-52.5]'
+|   |   |   |   |   |   |   |   |   |   |   RestingBP < 125 : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   |   |   RestingBP >= 125 : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   Age = '(52.5-64.75]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   Age = '(64.75-inf)' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   FastingBS = TRUE : TRUE (5/0)
+|   |   |   |   |   |   |   NAP = TRUE : FALSE (1/0)
+|   |   |   |   |   |   RestingECG = ST
+|   |   |   |   |   |   |   RestingBP < 99.5 : TRUE (1/0)
+|   |   |   |   |   |   |   RestingBP >= 99.5
+|   |   |   |   |   |   |   |   RestingBP < 112 : FALSE (1/0)
+|   |   |   |   |   |   |   |   RestingBP >= 112
+|   |   |   |   |   |   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   Age = '(40.25-52.5]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   Age = '(52.5-64.75]' : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   Age = '(64.75-inf)' : FALSE (1/0)
+|   |   |   |   |   |   RestingECG = LVH : TRUE (1/0)
+|   |   |   |   |   RestingBP >= 132.5
+|   |   |   |   |   |   RestingECG = Normal : FALSE (5/0)
+|   |   |   |   |   |   RestingECG = ST
+|   |   |   |   |   |   |   NAP = FALSE : FALSE (1/0)
+|   |   |   |   |   |   |   NAP = TRUE : TRUE (1/0)
+|   |   |   |   |   |   RestingECG = LVH : FALSE (0/0)
+|   |   |   |   Cholesterol = '(150.75-301.5]'
+|   |   |   |   |   NAP = FALSE
+|   |   |   |   |   |   Sex = M
+|   |   |   |   |   |   |   RestingBP < 113.5
+|   |   |   |   |   |   |   |   RestingECG = Normal
+|   |   |   |   |   |   |   |   |   Age = '(-inf-40.25]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   Age = '(40.25-52.5]'
+|   |   |   |   |   |   |   |   |   |   ASY = FALSE : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   ASY = TRUE
+|   |   |   |   |   |   |   |   |   |   |   RestingBP < 111 : FALSE (2/0)
+|   |   |   |   |   |   |   |   |   |   |   RestingBP >= 111
+|   |   |   |   |   |   |   |   |   |   |   |   MaxHR = '(-inf-88.4]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   |   |   |   MaxHR = '(88.4-116.8]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   |   |   |   MaxHR = '(116.8-145.2]' : FALSE (2/0)
+|   |   |   |   |   |   |   |   |   |   |   |   MaxHR = '(145.2-173.6]' : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   |   |   |   MaxHR = '(173.6-inf)' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   Age = '(52.5-64.75]' : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   Age = '(64.75-inf)' : FALSE (0/0)
+|   |   |   |   |   |   |   |   RestingECG = ST : FALSE (2/0)
+|   |   |   |   |   |   |   |   RestingECG = LVH
+|   |   |   |   |   |   |   |   |   RestingBP < 111
+|   |   |   |   |   |   |   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   |   Age = '(40.25-52.5]' : TRUE (2/0)
+|   |   |   |   |   |   |   |   |   |   Age = '(52.5-64.75]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   Age = '(64.75-inf)' : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   RestingBP >= 111 : TRUE (1/0)
+|   |   |   |   |   |   |   RestingBP >= 113.5
+|   |   |   |   |   |   |   |   Age = '(-inf-40.25]'
+|   |   |   |   |   |   |   |   |   TA = FALSE
+|   |   |   |   |   |   |   |   |   |   MaxHR = '(-inf-88.4]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   |   MaxHR = '(88.4-116.8]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   |   MaxHR = '(116.8-145.2]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   |   MaxHR = '(145.2-173.6]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   MaxHR = '(173.6-inf)' : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   TA = TRUE : FALSE (1/0)
+|   |   |   |   |   |   |   |   Age = '(40.25-52.5]'
+|   |   |   |   |   |   |   |   |   RestingECG = Normal : FALSE (5/0)
+|   |   |   |   |   |   |   |   |   RestingECG = ST : FALSE (4/0)
+|   |   |   |   |   |   |   |   |   RestingECG = LVH
+|   |   |   |   |   |   |   |   |   |   MaxHR = '(-inf-88.4]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   |   MaxHR = '(88.4-116.8]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   |   MaxHR = '(116.8-145.2]'
+|   |   |   |   |   |   |   |   |   |   |   RestingBP < 126 : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   |   |   RestingBP >= 126 : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   MaxHR = '(145.2-173.6]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   |   MaxHR = '(173.6-inf)' : FALSE (3/0)
+|   |   |   |   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   |   |   |   ASY = FALSE : TRUE (2/0)
+|   |   |   |   |   |   |   |   |   ASY = TRUE
+|   |   |   |   |   |   |   |   |   |   MaxHR = '(-inf-88.4]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   MaxHR = '(88.4-116.8]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   MaxHR = '(116.8-145.2]' : FALSE (3/0)
+|   |   |   |   |   |   |   |   |   |   MaxHR = '(145.2-173.6]'
+|   |   |   |   |   |   |   |   |   |   |   RestingECG = Normal
+|   |   |   |   |   |   |   |   |   |   |   |   RestingBP < 144 : FALSE (2/0)
+|   |   |   |   |   |   |   |   |   |   |   |   RestingBP >= 144 : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   |   |   RestingECG = ST : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   |   RestingECG = LVH : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   |   MaxHR = '(173.6-inf)' : FALSE (1/0)
+|   |   |   |   |   |   |   |   Age = '(64.75-inf)' : FALSE (3/0)
+|   |   |   |   |   |   Sex = F : FALSE (16/0)
+|   |   |   |   |   NAP = TRUE
+|   |   |   |   |   |   Age = '(-inf-40.25]' : FALSE (14/0)
+|   |   |   |   |   |   Age = '(40.25-52.5]'
+|   |   |   |   |   |   |   RestingBP < 109 : TRUE (1/0)
+|   |   |   |   |   |   |   RestingBP >= 109 : FALSE (30/0)
+|   |   |   |   |   |   Age = '(52.5-64.75]' : FALSE (23/0)
+|   |   |   |   |   |   Age = '(64.75-inf)' : FALSE (4/0)
+|   |   |   |   Cholesterol = '(301.5-452.25]'
+|   |   |   |   |   Age = '(-inf-40.25]' : FALSE (4/0)
+|   |   |   |   |   Age = '(40.25-52.5]' : FALSE (2/0)
+|   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   RestingBP < 129 : FALSE (3/0)
+|   |   |   |   |   |   RestingBP >= 129
+|   |   |   |   |   |   |   FastingBS = FALSE
+|   |   |   |   |   |   |   |   MaxHR = '(-inf-88.4]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   MaxHR = '(88.4-116.8]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   MaxHR = '(116.8-145.2]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   MaxHR = '(145.2-173.6]' : TRUE (3/0)
+|   |   |   |   |   |   |   |   MaxHR = '(173.6-inf)' : FALSE (0/0)
+|   |   |   |   |   |   |   FastingBS = TRUE : FALSE (2/0)
+|   |   |   |   |   Age = '(64.75-inf)' : FALSE (2/0)
+|   |   |   |   Cholesterol = '(452.25-inf)' : FALSE (0/0)
+|   |   Oldpeak = '(0.92-2.68]'
+|   |   |   Sex = M
+|   |   |   |   Cholesterol = '(-inf-150.75]'
+|   |   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   |   Age = '(40.25-52.5]' : TRUE (3/0)
+|   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   ST_Slope_Up = TRUE : TRUE (4/0)
+|   |   |   |   |   |   ST_Slope_Up = FALSE : FALSE (1/0)
+|   |   |   |   |   Age = '(64.75-inf)'
+|   |   |   |   |   |   FastingBS = FALSE : FALSE (1/0)
+|   |   |   |   |   |   FastingBS = TRUE : TRUE (4/0)
+|   |   |   |   Cholesterol = '(150.75-301.5]'
+|   |   |   |   |   Age = '(-inf-40.25]' : FALSE (1/0)
+|   |   |   |   |   Age = '(40.25-52.5]'
+|   |   |   |   |   |   RestingBP < 137.5 : TRUE (2/0)
+|   |   |   |   |   |   RestingBP >= 137.5 : FALSE (1/0)
+|   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   ST_Slope_Flat = FALSE : FALSE (7/0)
+|   |   |   |   |   |   ST_Slope_Flat = TRUE
+|   |   |   |   |   |   |   TA = FALSE : FALSE (1/0)
+|   |   |   |   |   |   |   TA = TRUE
+|   |   |   |   |   |   |   |   RestingBP < 143.5 : TRUE (1/0)
+|   |   |   |   |   |   |   |   RestingBP >= 143.5 : FALSE (1/0)
+|   |   |   |   |   Age = '(64.75-inf)'
+|   |   |   |   |   |   NAP = FALSE
+|   |   |   |   |   |   |   RestingBP < 151 : TRUE (2/0)
+|   |   |   |   |   |   |   RestingBP >= 151 : FALSE (1/0)
+|   |   |   |   |   |   NAP = TRUE : FALSE (1/0)
+|   |   |   |   Cholesterol = '(301.5-452.25]' : FALSE (2/0)
+|   |   |   |   Cholesterol = '(452.25-inf)' : FALSE (1/0)
+|   |   |   Sex = F
+|   |   |   |   FastingBS = FALSE : FALSE (11/0)
+|   |   |   |   FastingBS = TRUE
+|   |   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   |   Age = '(40.25-52.5]' : FALSE (1/0)
+|   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   RestingBP < 122.5 : TRUE (1/0)
+|   |   |   |   |   |   RestingBP >= 122.5 : FALSE (1/0)
+|   |   |   |   |   Age = '(64.75-inf)' : FALSE (0/0)
+|   |   Oldpeak = '(2.68-4.44]'
+|   |   |   RestingBP < 164
+|   |   |   |   MaxHR = '(-inf-88.4]' : FALSE (0/0)
+|   |   |   |   MaxHR = '(88.4-116.8]' : FALSE (0/0)
+|   |   |   |   MaxHR = '(116.8-145.2]' : TRUE (2/0)
+|   |   |   |   MaxHR = '(145.2-173.6]' : TRUE (4/0)
+|   |   |   |   MaxHR = '(173.6-inf)'
+|   |   |   |   |   RestingBP < 129 : TRUE (1/0)
+|   |   |   |   |   RestingBP >= 129 : FALSE (1/0)
+|   |   |   RestingBP >= 164 : FALSE (1/0)
+|   |   Oldpeak = '(4.44-inf)' : TRUE (1/0)
+|   ExerciseAngina = TRUE
+|   |   ASY = FALSE
+|   |   |   ST_Slope_Flat = FALSE
+|   |   |   |   RestingBP < 122.5
+|   |   |   |   |   Age = '(-inf-40.25]' : FALSE (1/0)
+|   |   |   |   |   Age = '(40.25-52.5]' : FALSE (2/0)
+|   |   |   |   |   Age = '(52.5-64.75]' : TRUE (1/0)
+|   |   |   |   |   Age = '(64.75-inf)' : FALSE (1/0)
+|   |   |   |   RestingBP >= 122.5 : FALSE (11/0)
+|   |   |   ST_Slope_Flat = TRUE
+|   |   |   |   Sex = M : TRUE (3/0)
+|   |   |   |   Sex = F : FALSE (1/0)
+|   |   ASY = TRUE
+|   |   |   RestingBP < 88 : FALSE (1/0)
+|   |   |   RestingBP >= 88
+|   |   |   |   MaxHR = '(-inf-88.4]' : TRUE (2/0)
+|   |   |   |   MaxHR = '(88.4-116.8]'
+|   |   |   |   |   RestingBP < 124.5 : TRUE (8/0)
+|   |   |   |   |   RestingBP >= 124.5
+|   |   |   |   |   |   ST_Slope_Flat = FALSE
+|   |   |   |   |   |   |   RestingECG = Normal : TRUE (1/0)
+|   |   |   |   |   |   |   RestingECG = ST
+|   |   |   |   |   |   |   |   Oldpeak = '(-inf--0.84]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   Oldpeak = '(-0.84-0.92]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   Oldpeak = '(0.92-2.68]' : TRUE (1/0)
+|   |   |   |   |   |   |   |   Oldpeak = '(2.68-4.44]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   Oldpeak = '(4.44-inf)' : FALSE (0/0)
+|   |   |   |   |   |   |   RestingECG = LVH
+|   |   |   |   |   |   |   |   RestingBP < 146 : FALSE (1/0)
+|   |   |   |   |   |   |   |   RestingBP >= 146 : TRUE (2/0)
+|   |   |   |   |   |   ST_Slope_Flat = TRUE
+|   |   |   |   |   |   |   RestingBP < 159 : TRUE (6/0)
+|   |   |   |   |   |   |   RestingBP >= 159 : FALSE (1/0)
+|   |   |   |   MaxHR = '(116.8-145.2]'
+|   |   |   |   |   Oldpeak = '(-inf--0.84]' : TRUE (1/0)
+|   |   |   |   |   Oldpeak = '(-0.84-0.92]'
+|   |   |   |   |   |   Cholesterol = '(-inf-150.75]'
+|   |   |   |   |   |   |   RestingBP < 146 : TRUE (3/0)
+|   |   |   |   |   |   |   RestingBP >= 146 : FALSE (1/0)
+|   |   |   |   |   |   Cholesterol = '(150.75-301.5]'
+|   |   |   |   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   |   |   |   Age = '(40.25-52.5]' : FALSE (2/0)
+|   |   |   |   |   |   |   Age = '(52.5-64.75]' : FALSE (0/0)
+|   |   |   |   |   |   |   Age = '(64.75-inf)' : TRUE (1/0)
+|   |   |   |   |   |   Cholesterol = '(301.5-452.25]' : FALSE (0/0)
+|   |   |   |   |   |   Cholesterol = '(452.25-inf)' : FALSE (0/0)
+|   |   |   |   |   Oldpeak = '(0.92-2.68]'
+|   |   |   |   |   |   Cholesterol = '(-inf-150.75]'
+|   |   |   |   |   |   |   ST_Slope_Flat = FALSE
+|   |   |   |   |   |   |   |   Sex = M
+|   |   |   |   |   |   |   |   |   RestingBP < 115 : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   RestingBP >= 115
+|   |   |   |   |   |   |   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   |   Age = '(40.25-52.5]' : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   |   |   |   |   |   RestingBP < 130 : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   |   RestingBP >= 130
+|   |   |   |   |   |   |   |   |   |   |   |   RestingECG = Normal : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   |   |   |   RestingECG = ST : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   |   |   RestingECG = LVH : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   |   Age = '(64.75-inf)' : FALSE (0/0)
+|   |   |   |   |   |   |   |   Sex = F : TRUE (1/0)
+|   |   |   |   |   |   |   ST_Slope_Flat = TRUE : TRUE (3/0)
+|   |   |   |   |   |   Cholesterol = '(150.75-301.5]' : TRUE (8/0)
+|   |   |   |   |   |   Cholesterol = '(301.5-452.25]' : TRUE (3/0)
+|   |   |   |   |   |   Cholesterol = '(452.25-inf)' : FALSE (0/0)
+|   |   |   |   |   Oldpeak = '(2.68-4.44]' : TRUE (9/0)
+|   |   |   |   |   Oldpeak = '(4.44-inf)' : FALSE (0/0)
+|   |   |   |   MaxHR = '(145.2-173.6]'
+|   |   |   |   |   Cholesterol = '(-inf-150.75]' : TRUE (1/0)
+|   |   |   |   |   Cholesterol = '(150.75-301.5]'
+|   |   |   |   |   |   RestingBP < 136
+|   |   |   |   |   |   |   RestingBP < 131 : TRUE (5/0)
+|   |   |   |   |   |   |   RestingBP >= 131 : FALSE (1/0)
+|   |   |   |   |   |   RestingBP >= 136 : TRUE (7/0)
+|   |   |   |   |   Cholesterol = '(301.5-452.25]'
+|   |   |   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   |   |   Age = '(40.25-52.5]' : FALSE (0/0)
+|   |   |   |   |   |   Age = '(52.5-64.75]' : FALSE (2/0)
+|   |   |   |   |   |   Age = '(64.75-inf)' : TRUE (1/0)
+|   |   |   |   |   Cholesterol = '(452.25-inf)' : FALSE (0/0)
+|   |   |   |   MaxHR = '(173.6-inf)' : FALSE (1/0)
+ST_Slope_Down = TRUE
+|   Sex = M
+|   |   MaxHR = '(-inf-88.4]' : TRUE (20/0)
+|   |   MaxHR = '(88.4-116.8]'
+|   |   |   RestingBP < 140.5
+|   |   |   |   Oldpeak = '(-inf--0.84]' : TRUE (2/0)
+|   |   |   |   Oldpeak = '(-0.84-0.92]'
+|   |   |   |   |   RestingECG = Normal
+|   |   |   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   |   |   Age = '(40.25-52.5]' : TRUE (6/0)
+|   |   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   |   RestingBP < 127
+|   |   |   |   |   |   |   |   ASY = FALSE
+|   |   |   |   |   |   |   |   |   Cholesterol = '(-inf-150.75]'
+|   |   |   |   |   |   |   |   |   |   ATA = TRUE : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   |   ATA = FALSE
+|   |   |   |   |   |   |   |   |   |   |   RestingBP < 112.5 : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   |   |   RestingBP >= 112.5 : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   Cholesterol = '(150.75-301.5]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   Cholesterol = '(301.5-452.25]' : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   Cholesterol = '(452.25-inf)' : FALSE (0/0)
+|   |   |   |   |   |   |   |   ASY = TRUE : TRUE (5/0)
+|   |   |   |   |   |   |   RestingBP >= 127
+|   |   |   |   |   |   |   |   RestingBP < 134 : FALSE (1/0)
+|   |   |   |   |   |   |   |   RestingBP >= 134
+|   |   |   |   |   |   |   |   |   Cholesterol = '(-inf-150.75]' : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   Cholesterol = '(150.75-301.5]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   Cholesterol = '(301.5-452.25]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   Cholesterol = '(452.25-inf)' : FALSE (0/0)
+|   |   |   |   |   |   Age = '(64.75-inf)' : TRUE (2/0)
+|   |   |   |   |   RestingECG = ST : TRUE (5/0)
+|   |   |   |   |   RestingECG = LVH : TRUE (4/0)
+|   |   |   |   Oldpeak = '(0.92-2.68]'
+|   |   |   |   |   ExerciseAngina = FALSE : TRUE (8/0)
+|   |   |   |   |   ExerciseAngina = TRUE
+|   |   |   |   |   |   Cholesterol = '(-inf-150.75]' : TRUE (10/0)
+|   |   |   |   |   |   Cholesterol = '(150.75-301.5]'
+|   |   |   |   |   |   |   RestingECG = Normal : TRUE (7/0)
+|   |   |   |   |   |   |   RestingECG = ST
+|   |   |   |   |   |   |   |   ASY = FALSE : TRUE (1/0)
+|   |   |   |   |   |   |   |   ASY = TRUE
+|   |   |   |   |   |   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   Age = '(40.25-52.5]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   Age = '(52.5-64.75]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   Age = '(64.75-inf)' : TRUE (1/0)
+|   |   |   |   |   |   |   RestingECG = LVH
+|   |   |   |   |   |   |   |   ASY = FALSE : FALSE (1/0)
+|   |   |   |   |   |   |   |   ASY = TRUE : TRUE (3/0)
+|   |   |   |   |   |   Cholesterol = '(301.5-452.25]' : TRUE (1/0)
+|   |   |   |   |   |   Cholesterol = '(452.25-inf)' : FALSE (0/0)
+|   |   |   |   Oldpeak = '(2.68-4.44]'
+|   |   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   |   Age = '(40.25-52.5]' : FALSE (0/0)
+|   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   RestingBP < 127
+|   |   |   |   |   |   |   RestingECG = Normal : FALSE (0/0)
+|   |   |   |   |   |   |   RestingECG = ST : FALSE (1/0)
+|   |   |   |   |   |   |   RestingECG = LVH : TRUE (1/0)
+|   |   |   |   |   |   RestingBP >= 127 : TRUE (2/0)
+|   |   |   |   |   Age = '(64.75-inf)' : TRUE (1/0)
+|   |   |   |   Oldpeak = '(4.44-inf)' : FALSE (0/0)
+|   |   |   RestingBP >= 140.5
+|   |   |   |   RestingECG = Normal : TRUE (23/0)
+|   |   |   |   RestingECG = ST : TRUE (12/0)
+|   |   |   |   RestingECG = LVH
+|   |   |   |   |   ExerciseAngina = FALSE
+|   |   |   |   |   |   Cholesterol = '(-inf-150.75]' : FALSE (1/0)
+|   |   |   |   |   |   Cholesterol = '(150.75-301.5]' : TRUE (1/0)
+|   |   |   |   |   |   Cholesterol = '(301.5-452.25]' : FALSE (0/0)
+|   |   |   |   |   |   Cholesterol = '(452.25-inf)' : FALSE (0/0)
+|   |   |   |   |   ExerciseAngina = TRUE : TRUE (3/0)
+|   |   MaxHR = '(116.8-145.2]'
+|   |   |   Cholesterol = '(-inf-150.75]'
+|   |   |   |   NAP = FALSE : TRUE (36/0)
+|   |   |   |   NAP = TRUE
+|   |   |   |   |   Age = '(-inf-40.25]' : TRUE (1/0)
+|   |   |   |   |   Age = '(40.25-52.5]' : TRUE (3/0)
+|   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   RestingBP < 175 : TRUE (5/0)
+|   |   |   |   |   |   RestingBP >= 175 : FALSE (1/0)
+|   |   |   |   |   Age = '(64.75-inf)' : FALSE (0/0)
+|   |   |   Cholesterol = '(150.75-301.5]'
+|   |   |   |   RestingBP < 125.5
+|   |   |   |   |   Oldpeak = '(-inf--0.84]' : FALSE (0/0)
+|   |   |   |   |   Oldpeak = '(-0.84-0.92]'
+|   |   |   |   |   |   Age = '(-inf-40.25]' : TRUE (1/0)
+|   |   |   |   |   |   Age = '(40.25-52.5]' : TRUE (1/0)
+|   |   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   |   ASY = FALSE : FALSE (1/0)
+|   |   |   |   |   |   |   ASY = TRUE : TRUE (1/0)
+|   |   |   |   |   |   Age = '(64.75-inf)' : TRUE (1/0)
+|   |   |   |   |   Oldpeak = '(0.92-2.68]'
+|   |   |   |   |   |   FastingBS = FALSE
+|   |   |   |   |   |   |   ATA = TRUE : FALSE (1/0)
+|   |   |   |   |   |   |   ATA = FALSE
+|   |   |   |   |   |   |   |   Age = '(-inf-40.25]' : TRUE (2/0)
+|   |   |   |   |   |   |   |   Age = '(40.25-52.5]'
+|   |   |   |   |   |   |   |   |   TA = FALSE
+|   |   |   |   |   |   |   |   |   |   ExerciseAngina = FALSE
+|   |   |   |   |   |   |   |   |   |   |   ASY = FALSE : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   |   |   ASY = TRUE : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   ExerciseAngina = TRUE
+|   |   |   |   |   |   |   |   |   |   |   RestingBP < 105 : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   |   RestingBP >= 105
+|   |   |   |   |   |   |   |   |   |   |   |   RestingECG = Normal : TRUE (3/0)
+|   |   |   |   |   |   |   |   |   |   |   |   RestingECG = ST : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   |   |   RestingECG = LVH : TRUE (2/0)
+|   |   |   |   |   |   |   |   |   TA = TRUE : TRUE (1/0)
+|   |   |   |   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   |   |   |   RestingECG = Normal
+|   |   |   |   |   |   |   |   |   |   RestingBP < 117
+|   |   |   |   |   |   |   |   |   |   |   RestingBP < 105 : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   |   |   RestingBP >= 105 : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   RestingBP >= 117 : TRUE (3/0)
+|   |   |   |   |   |   |   |   |   RestingECG = ST : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   RestingECG = LVH
+|   |   |   |   |   |   |   |   |   |   ASY = FALSE : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   ASY = TRUE : TRUE (1/0)
+|   |   |   |   |   |   |   |   Age = '(64.75-inf)' : TRUE (1/0)
+|   |   |   |   |   |   FastingBS = TRUE : TRUE (2/0)
+|   |   |   |   |   Oldpeak = '(2.68-4.44]' : TRUE (3/0)
+|   |   |   |   |   Oldpeak = '(4.44-inf)' : FALSE (0/0)
+|   |   |   |   RestingBP >= 125.5
+|   |   |   |   |   ExerciseAngina = FALSE
+|   |   |   |   |   |   Oldpeak = '(-inf--0.84]' : FALSE (0/0)
+|   |   |   |   |   |   Oldpeak = '(-0.84-0.92]'
+|   |   |   |   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   |   |   |   Age = '(40.25-52.5]' : FALSE (1/0)
+|   |   |   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   |   |   ASY = FALSE : TRUE (3/0)
+|   |   |   |   |   |   |   |   ASY = TRUE
+|   |   |   |   |   |   |   |   |   FastingBS = FALSE : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   FastingBS = TRUE : TRUE (1/0)
+|   |   |   |   |   |   |   Age = '(64.75-inf)'
+|   |   |   |   |   |   |   |   RestingECG = Normal : TRUE (1/0)
+|   |   |   |   |   |   |   |   RestingECG = ST : FALSE (0/0)
+|   |   |   |   |   |   |   |   RestingECG = LVH : FALSE (1/0)
+|   |   |   |   |   |   Oldpeak = '(0.92-2.68]' : TRUE (7/0)
+|   |   |   |   |   |   Oldpeak = '(2.68-4.44]' : TRUE (2/0)
+|   |   |   |   |   |   Oldpeak = '(4.44-inf)' : FALSE (0/0)
+|   |   |   |   |   ExerciseAngina = TRUE
+|   |   |   |   |   |   RestingBP < 147.5 : TRUE (47/0)
+|   |   |   |   |   |   RestingBP >= 147.5
+|   |   |   |   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   |   |   |   Age = '(40.25-52.5]'
+|   |   |   |   |   |   |   |   RestingBP < 160 : FALSE (2/1)
+|   |   |   |   |   |   |   |   RestingBP >= 160 : TRUE (1/0)
+|   |   |   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   |   |   NAP = FALSE : TRUE (8/0)
+|   |   |   |   |   |   |   |   NAP = TRUE
+|   |   |   |   |   |   |   |   |   Oldpeak = '(-inf--0.84]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   Oldpeak = '(-0.84-0.92]' : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   Oldpeak = '(0.92-2.68]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   Oldpeak = '(2.68-4.44]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   Oldpeak = '(4.44-inf)' : FALSE (0/0)
+|   |   |   |   |   |   |   Age = '(64.75-inf)' : TRUE (2/0)
+|   |   |   Cholesterol = '(301.5-452.25]'
+|   |   |   |   NAP = FALSE : TRUE (12/0)
+|   |   |   |   NAP = TRUE
+|   |   |   |   |   RestingBP < 133.5
+|   |   |   |   |   |   RestingBP < 127.5 : TRUE (1/0)
+|   |   |   |   |   |   RestingBP >= 127.5 : FALSE (1/0)
+|   |   |   |   |   RestingBP >= 133.5 : TRUE (2/0)
+|   |   |   Cholesterol = '(452.25-inf)' : TRUE (4/0)
+|   |   MaxHR = '(145.2-173.6]'
+|   |   |   NAP = FALSE
+|   |   |   |   RestingECG = Normal
+|   |   |   |   |   Oldpeak = '(-inf--0.84]' : FALSE (0/0)
+|   |   |   |   |   Oldpeak = '(-0.84-0.92]'
+|   |   |   |   |   |   RestingBP < 132.5 : TRUE (11/0)
+|   |   |   |   |   |   RestingBP >= 132.5
+|   |   |   |   |   |   |   Age = '(-inf-40.25]' : TRUE (1/0)
+|   |   |   |   |   |   |   Age = '(40.25-52.5]' : TRUE (1/0)
+|   |   |   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   |   |   RestingBP < 150 : FALSE (2/0)
+|   |   |   |   |   |   |   |   RestingBP >= 150 : TRUE (1/0)
+|   |   |   |   |   |   |   Age = '(64.75-inf)' : FALSE (0/0)
+|   |   |   |   |   Oldpeak = '(0.92-2.68]'
+|   |   |   |   |   |   FastingBS = FALSE
+|   |   |   |   |   |   |   RestingBP < 115 : TRUE (1/0)
+|   |   |   |   |   |   |   RestingBP >= 115
+|   |   |   |   |   |   |   |   Age = '(-inf-40.25]'
+|   |   |   |   |   |   |   |   |   ATA = TRUE : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   ATA = FALSE : TRUE (1/0)
+|   |   |   |   |   |   |   |   Age = '(40.25-52.5]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   Age = '(52.5-64.75]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   Age = '(64.75-inf)' : FALSE (0/0)
+|   |   |   |   |   |   FastingBS = TRUE
+|   |   |   |   |   |   |   ASY = FALSE : FALSE (1/0)
+|   |   |   |   |   |   |   ASY = TRUE : TRUE (4/0)
+|   |   |   |   |   Oldpeak = '(2.68-4.44]' : TRUE (3/0)
+|   |   |   |   |   Oldpeak = '(4.44-inf)' : FALSE (0/0)
+|   |   |   |   RestingECG = ST : TRUE (9/0)
+|   |   |   |   RestingECG = LVH
+|   |   |   |   |   Oldpeak = '(-inf--0.84]' : FALSE (0/0)
+|   |   |   |   |   Oldpeak = '(-0.84-0.92]'
+|   |   |   |   |   |   Cholesterol = '(-inf-150.75]' : FALSE (0/0)
+|   |   |   |   |   |   Cholesterol = '(150.75-301.5]'
+|   |   |   |   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   |   |   |   Age = '(40.25-52.5]' : TRUE (1/0)
+|   |   |   |   |   |   |   Age = '(52.5-64.75]' : FALSE (2/1)
+|   |   |   |   |   |   |   Age = '(64.75-inf)' : FALSE (0/0)
+|   |   |   |   |   |   Cholesterol = '(301.5-452.25]'
+|   |   |   |   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   |   |   |   Age = '(40.25-52.5]' : TRUE (1/0)
+|   |   |   |   |   |   |   Age = '(52.5-64.75]' : FALSE (0/0)
+|   |   |   |   |   |   |   Age = '(64.75-inf)' : FALSE (1/0)
+|   |   |   |   |   |   Cholesterol = '(452.25-inf)' : FALSE (0/0)
+|   |   |   |   |   Oldpeak = '(0.92-2.68]'
+|   |   |   |   |   |   TA = FALSE : TRUE (3/0)
+|   |   |   |   |   |   TA = TRUE : FALSE (1/0)
+|   |   |   |   |   Oldpeak = '(2.68-4.44]' : FALSE (1/0)
+|   |   |   |   |   Oldpeak = '(4.44-inf)' : FALSE (0/0)
+|   |   |   NAP = TRUE
+|   |   |   |   RestingBP < 131
+|   |   |   |   |   Age = '(-inf-40.25]' : FALSE (1/0)
+|   |   |   |   |   Age = '(40.25-52.5]' : FALSE (3/0)
+|   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   RestingBP < 129
+|   |   |   |   |   |   |   Oldpeak = '(-inf--0.84]' : FALSE (0/0)
+|   |   |   |   |   |   |   Oldpeak = '(-0.84-0.92]'
+|   |   |   |   |   |   |   |   RestingBP < 124
+|   |   |   |   |   |   |   |   |   FastingBS = FALSE : FALSE (2/0)
+|   |   |   |   |   |   |   |   |   FastingBS = TRUE : TRUE (1/0)
+|   |   |   |   |   |   |   |   RestingBP >= 124 : TRUE (1/0)
+|   |   |   |   |   |   |   Oldpeak = '(0.92-2.68]' : TRUE (3/0)
+|   |   |   |   |   |   |   Oldpeak = '(2.68-4.44]' : FALSE (0/0)
+|   |   |   |   |   |   |   Oldpeak = '(4.44-inf)' : FALSE (0/0)
+|   |   |   |   |   |   RestingBP >= 129 : FALSE (2/0)
+|   |   |   |   |   Age = '(64.75-inf)' : FALSE (0/0)
+|   |   |   |   RestingBP >= 131 : TRUE (8/0)
+|   |   MaxHR = '(173.6-inf)'
+|   |   |   ATA = TRUE : FALSE (1/0)
+|   |   |   ATA = FALSE
+|   |   |   |   Cholesterol = '(-inf-150.75]' : TRUE (1/0)
+|   |   |   |   Cholesterol = '(150.75-301.5]'
+|   |   |   |   |   Age = '(-inf-40.25]' : TRUE (2/0)
+|   |   |   |   |   Age = '(40.25-52.5]'
+|   |   |   |   |   |   RestingBP < 116.5 : TRUE (1/0)
+|   |   |   |   |   |   RestingBP >= 116.5
+|   |   |   |   |   |   |   RestingBP < 129 : FALSE (1/0)
+|   |   |   |   |   |   |   RestingBP >= 129
+|   |   |   |   |   |   |   |   RestingBP < 146 : TRUE (1/0)
+|   |   |   |   |   |   |   |   RestingBP >= 146 : FALSE (1/0)
+|   |   |   |   |   Age = '(52.5-64.75]' : FALSE (0/0)
+|   |   |   |   |   Age = '(64.75-inf)' : TRUE (1/0)
+|   |   |   |   Cholesterol = '(301.5-452.25]' : FALSE (2/0)
+|   |   |   |   Cholesterol = '(452.25-inf)' : FALSE (0/0)
+|   Sex = F
+|   |   ExerciseAngina = FALSE
+|   |   |   RestingBP < 148
+|   |   |   |   FastingBS = FALSE
+|   |   |   |   |   NAP = FALSE
+|   |   |   |   |   |   Age = '(-inf-40.25]' : TRUE (1/0)
+|   |   |   |   |   |   Age = '(40.25-52.5]' : FALSE (4/0)
+|   |   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   |   ASY = FALSE
+|   |   |   |   |   |   |   |   MaxHR = '(-inf-88.4]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   MaxHR = '(88.4-116.8]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   MaxHR = '(116.8-145.2]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   MaxHR = '(145.2-173.6]'
+|   |   |   |   |   |   |   |   |   RestingECG = Normal : FALSE (2/1)
+|   |   |   |   |   |   |   |   |   RestingECG = ST : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   RestingECG = LVH : FALSE (2/0)
+|   |   |   |   |   |   |   |   MaxHR = '(173.6-inf)' : TRUE (1/0)
+|   |   |   |   |   |   |   ASY = TRUE : FALSE (5/0)
+|   |   |   |   |   |   Age = '(64.75-inf)' : FALSE (1/0)
+|   |   |   |   |   NAP = TRUE
+|   |   |   |   |   |   Age = '(-inf-40.25]' : FALSE (1/0)
+|   |   |   |   |   |   Age = '(40.25-52.5]' : FALSE (7/0)
+|   |   |   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   |   |   MaxHR = '(-inf-88.4]' : FALSE (0/0)
+|   |   |   |   |   |   |   MaxHR = '(88.4-116.8]' : TRUE (1/0)
+|   |   |   |   |   |   |   MaxHR = '(116.8-145.2]' : FALSE (0/0)
+|   |   |   |   |   |   |   MaxHR = '(145.2-173.6]' : FALSE (1/0)
+|   |   |   |   |   |   |   MaxHR = '(173.6-inf)' : FALSE (0/0)
+|   |   |   |   |   |   Age = '(64.75-inf)' : FALSE (4/0)
+|   |   |   |   FastingBS = TRUE : TRUE (4/0)
+|   |   |   RestingBP >= 148 : TRUE (7/0)
+|   |   ExerciseAngina = TRUE
+|   |   |   RestingBP < 114 : TRUE (2/0)
+|   |   |   RestingBP >= 114
+|   |   |   |   Age = '(-inf-40.25]' : FALSE (0/0)
+|   |   |   |   Age = '(40.25-52.5]'
+|   |   |   |   |   Oldpeak = '(-inf--0.84]' : FALSE (0/0)
+|   |   |   |   |   Oldpeak = '(-0.84-0.92]'
+|   |   |   |   |   |   RestingBP < 139 : FALSE (2/0)
+|   |   |   |   |   |   RestingBP >= 139 : TRUE (1/0)
+|   |   |   |   |   Oldpeak = '(0.92-2.68]'
+|   |   |   |   |   |   Cholesterol = '(-inf-150.75]' : FALSE (0/0)
+|   |   |   |   |   |   Cholesterol = '(150.75-301.5]'
+|   |   |   |   |   |   |   MaxHR = '(-inf-88.4]' : FALSE (0/0)
+|   |   |   |   |   |   |   MaxHR = '(88.4-116.8]' : TRUE (2/0)
+|   |   |   |   |   |   |   MaxHR = '(116.8-145.2]' : FALSE (2/0)
+|   |   |   |   |   |   |   MaxHR = '(145.2-173.6]' : FALSE (0/0)
+|   |   |   |   |   |   |   MaxHR = '(173.6-inf)' : FALSE (0/0)
+|   |   |   |   |   |   Cholesterol = '(301.5-452.25]'
+|   |   |   |   |   |   |   RestingBP < 125 : FALSE (1/0)
+|   |   |   |   |   |   |   RestingBP >= 125 : TRUE (2/0)
+|   |   |   |   |   |   Cholesterol = '(452.25-inf)' : FALSE (0/0)
+|   |   |   |   |   Oldpeak = '(2.68-4.44]' : TRUE (1/0)
+|   |   |   |   |   Oldpeak = '(4.44-inf)' : FALSE (0/0)
+|   |   |   |   Age = '(52.5-64.75]'
+|   |   |   |   |   ATA = TRUE
+|   |   |   |   |   |   RestingBP < 160 : FALSE (1/0)
+|   |   |   |   |   |   RestingBP >= 160 : TRUE (1/0)
+|   |   |   |   |   ATA = FALSE
+|   |   |   |   |   |   ASY = FALSE : TRUE (1/0)
+|   |   |   |   |   |   ASY = TRUE
+|   |   |   |   |   |   |   RestingECG = Normal : TRUE (7/0)
+|   |   |   |   |   |   |   RestingECG = ST
+|   |   |   |   |   |   |   |   RestingBP < 129 : TRUE (1/0)
+|   |   |   |   |   |   |   |   RestingBP >= 129
+|   |   |   |   |   |   |   |   |   Cholesterol = '(-inf-150.75]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   Cholesterol = '(150.75-301.5]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   Cholesterol = '(301.5-452.25]'
+|   |   |   |   |   |   |   |   |   |   RestingBP < 155 : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   |   RestingBP >= 155
+|   |   |   |   |   |   |   |   |   |   |   Oldpeak = '(-inf--0.84]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   |   |   Oldpeak = '(-0.84-0.92]' : FALSE (1/0)
+|   |   |   |   |   |   |   |   |   |   |   Oldpeak = '(0.92-2.68]' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   |   |   Oldpeak = '(2.68-4.44]' : TRUE (1/0)
+|   |   |   |   |   |   |   |   |   |   |   Oldpeak = '(4.44-inf)' : FALSE (0/0)
+|   |   |   |   |   |   |   |   |   Cholesterol = '(452.25-inf)' : FALSE (0/0)
+|   |   |   |   |   |   |   RestingECG = LVH : TRUE (3/0)
+|   |   |   |   Age = '(64.75-inf)' : TRUE (1/0)
+
+Size of the tree : 616
+
+Time taken to build model: 0 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         734               79.9564 %
+Incorrectly Classified Instances       184               20.0436 %
+Kappa statistic                          0.5953
+Mean absolute error                      0.2002
+Root mean squared error                  0.4383
+Relative absolute error                 40.5019 %
+Root relative squared error             88.1685 %
+Total Number of Instances              918     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.785    0.189    0.770      0.785    0.778      0.595    0.805     0.717     FALSE
+                 0.811    0.215    0.824      0.811    0.817      0.595    0.805     0.779     TRUE
+Weighted Avg.    0.800    0.203    0.800      0.800    0.800      0.595    0.805     0.751     
+
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+ 322  88 |   a = FALSE
+  96 412 |   b = TRUE
+
