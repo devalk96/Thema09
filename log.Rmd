@@ -6,6 +6,8 @@ output:
   pdf_document: 
     toc: true
     toc_depth: 3
+    fig_caption: yes
+    extra_dependencies: ["flafter"]
 ---
 
 ```{r setup, include=FALSE}
@@ -17,6 +19,10 @@ library(ggcorrplot)
 library(reshape2)
 library(factoextra)
 library(tibble)
+library(RWeka)
+library(ggpubr)
+library(pROC)
+
 ```
 \newpage
 # Logbook EDA
@@ -42,7 +48,7 @@ flags = data.frame(Reduce(cbind,
 colnames(flags) <- c("ASY", "ATA", "NAP", "TA")
 heartdata$ASY = as.logical(flags$ASY)
 heartdata$ATA = as.logical(flags$ATA)
-heartdata$NAP = as.logical(flags$NAP)
+heartdata$NAP = as.logical(flags$NAP) 
 heartdata$TA = as.logical(flags$TA)
 
 flags = data.frame(Reduce(cbind, 
@@ -57,6 +63,11 @@ heartdata$ST_Slope_Up = as.logical(flags$Up)
 # Changes Y/N to Boolean
 heartdata$ExerciseAngina = heartdata$ExerciseAngina == "Y"
 heartdata$FastingBS = as.logical(heartdata$FastingBS)
+
+
+
+
+
 ```
 
 ```{r get data types}
@@ -64,44 +75,33 @@ s <- sapply(heartdata, typeof)
 sr <- data.frame("attribute" = colnames(heartdata),
                  "type" = sapply(heartdata, typeof), 
                  "class" = sapply(heartdata, class),
-                 "full" = c("",
-                                   "",
-                                   "Type of chest pain",
-                                   "Resting blood pressure",
-                                   "",
-                                   "Fasting blood sugar",
-                                   "Resting electro cardiogram",
-                                   "Max heart rate (between 60 and 202)",
-                                   "Excercise induced Angina",
-                                   "Oldpeak Numeric value measured in depression",
-                                   "ST_Slope the slope of the peak exercise ST segment [Up: upsloping, Flat: flat, Down: downsloping]",
-                                   "Has heartdisease",
-                                   "Asymptomic pain",
-                                   "Atypical Angina",
-                                   "Non-Anginal Pain",
-                                   "Typical Angina -> Meets all three of the following characteristics: 1. Substernal chest discomfort of characteristic quality and duration 2. Provoked by extortion or emotional stress 3. Relieved by rest and/or nitrates within minutes. "
-                                   ),
-                 "description" = c("Age in years",
-                                   "",
-                                   "See underlying pain types",
-                                   "measured in mm/Hg",
-                                   "Cholesterol in serum (mm/dl)",
-                                   "1: if FastingBS > 120 mg/dl, 0: otherwise",
-                                   "[Normal: Normal, ST: having ST-T wave abnormality (T wave inversions and/or ST elevation or depression of > 0.05 mV), LVH: showing probable or definite left ventricular hypertrophy by Estes' criteria]",
-                                   "between 60 and 202",
-                                   "Excercise induced Angina",
-                                   "Oldpeak Numeric value measured in depression",
-                                   "ST_Slope the slope of the peak exercise ST segment [Up: upsloping, Flat: flat, Down: downsloping]",
-                                   "Has heartdisease",
-                                   "Asymptomic pain",
-                                   "Atypical Angina",
-                                   "Non-Anginal Pain",
-                                   "Typical Angina -> Meets all three of the following characteristics: 1. Substernal chest discomfort of characteristic quality and duration 2. Provoked by extortion or emotional stress 3. Relieved by rest and/or nitrates within minutes. "
-                                   ),
                  row.names = NULL)
 codebook <- as_tibble(sr)
 kable(codebook, caption = "Codebook") %>%
-  kable_styling(latex_options = c("scale_down", "hold_position"))
+  kable_styling(latex_options = c("hold_position"))
+```
+
+## TODO add description
+```{r, eval=FALSE}
+
+                 # "description" = c("Age in years",
+                 #                   "",
+                 #                   "See underlying pain types",
+                 #                   "measured in mm/Hg",
+                 #                   "Cholesterol in serum (mm/dl)",
+                 #                   "1: if FastingBS > 120 mg/dl, 0: otherwise",
+                 #                   "[Normal: Normal, ST: having ST-T wave abnormality (T wave inversions and/or ST elevation or depression of > 0.05 mV), LVH: showing probable or definite left ventricular hypertrophy by Estes' criteria]",
+                 #                   "between 60 and 202",
+                 #                   "Excercise induced Angina",
+                 #                   "Oldpeak Numeric value measured in depression",
+                 #                   "ST_Slope the slope of the peak exercise ST segment [Up: upsloping, Flat: flat, Down: downsloping]",
+                 #                   "Has heartdisease",
+                 #                   "Asymptomic pain",
+                 #                   "Atypical Angina",
+                 #                   "Non-Anginal Pain",
+                 #                   "Typical Angina -> Meets all three of the following characteristics: 1. Substernal chest discomfort of characteristic quality and duration 2. Provoked by extortion or emotional stress 3. Relieved by rest and/or nitrates within minutes. ", "Slope Flat", "Slope Down", "Slope Up"
+                 #                   )
+
 ```
 ## Summary
 ```{r Summary}
@@ -279,7 +279,199 @@ fviz_pca_biplot(res.pca,
 Using the above lying PCA graphs it seems that asymptomic pain is the biggest contributor in the diagnosis of heartdisease in this dataset. This makes it hard to predict HD as asymptomic patients have no (visible) symptoms. The other pain categories do not seem to have a direct relation with the presence of HD. 
 So far we can expect that age is the best variable in predicting HD as the percentage goes from around 25% at age ~30 to 75% at age ~65. 
 
-```{r saving cleaned to file, }
+
+## Algorithms
+```{r saving cleaned to file, eval=FALSE}
+
+# heartdata$ChestPainType <- NULL
+# heartdata$ST_Slope <- NULL
+
+heartdata$Cholesterol[heartdata$Cholesterol == 0] <- "?"
+heartdata$RestingBP[heartdata$RestingBP == 0] <- "?"
+
+heartdata$Cholesterol <- as.integer(heartdata$Cholesterol)
+heartdata$RestingBP <- as.integer(heartdata$RestingBP)
+## Set Heartdata as last column before exporting
+disease <- heartdata$HeartDisease
+# heartdata$HeartDisease <- NULL
+# heartdata$HeartDisease <- disease
+write.arff(heartdata, "data/heart_cleaned.arff")
 write.csv(heartdata, "data/heart_cleaned.csv", sep=",", row.names = FALSE)
+```
+
+Autoparsing data from weka text files to csv so that it can be used in R.
+```{python3.9}
+import os
+import pandas as pd
+
+path = "data/weka_data"
+output_path = "data/weka_parse.csv"
+
+pdcons = []
+for file in os.listdir(path):
+    if "txt" not in file:
+        continue
+    fileinfo = {}
+    with open(os.path.join(path, file), "r") as stream:
+        fileinfo["name"] = file.split(".")[0]
+        for line in stream:
+            if line.startswith("Correctly Classified Instances  "):
+                fileinfo["accuracy"] = line.split(" ")[-2]
+            elif line.startswith("Incorrectly Classified Instances "):
+                fileinfo["incorrect"] = line.split(" ")[-2]
+            elif line.startswith("Scheme:       "):
+                fileinfo["parameters"] = line.split("Scheme:       ")[1].replace("\n", "")
+    pdcons.append(fileinfo)
+dataframe = pd.DataFrame.from_dict(pdcons)
+dataframe.to_csv(output_path, index=False)
 
 ```
+
+```{r, fig.cap="Accuracy by algorithm"}
+mlresults <- read.table("data/weka_parse.csv", sep=",", header=T)
+
+ggplot(mlresults, aes(x=reorder(name, -accuracy), y=accuracy)) + 
+  geom_bar(stat = "identity", fill="dodgerblue1") +
+  coord_flip() + ylim(c(0,100)) + ggtitle("Accuracy of models") + xlab("Algorithm") + ylab("Accuracy (%)")
+```
+
+```{r}
+kable(mlresults[order(mlresults$accuracy, decreasing = T), ], col.names = c("Algorithm", "Run Parameters", "Correct (%)", "Incorrect (%)"))
+```
+\pagebreak
+
+## Analysis of multiple ML algorithms first run
+
+
+A fair amount of algorithms are significantly better then ZeroR, With al of them having an accuracy => 80%.
+
+```{r}
+algorithms <- c("ZeroR", "OneR", "J48", "RandomTree", "AdaBoostM1", "SMO", "SimpleLogistic", "NaiveBayes", "IBk")
+correct_p <- c(55.36, 81.37, 83.35, 79.89, 86.03, 86.00, 85.76, 85.33, 79.24)
+sig_vs_zeror <- c(F, T, T, T, T, T, T, T, T)
+sig_vs_ada <- c(T, T, T, T, F, F, F, F, T)
+experimenter <- data.frame(algorithm = algorithms, accuracy = correct_p, significance_zeror = sig_vs_zeror, significance_ada = sig_vs_ada)
+experimenter <- tibble::rowid_to_column(experimenter, "Key")
+
+```
+
+```{r, fig.cap="Accuracy of various models. Coloured by significace"}
+ggplot(experimenter, aes(x=reorder(algorithm, accuracy), y=accuracy, fill=significance_ada)) + 
+  geom_bar(stat = "identity") +
+  coord_flip() + ylim(c(0,100)) + ggtitle("Accuracy of models") + xlab("Algorithm") + ylab("Accuracy (%)")
+```
+
+```{r run1-tab, fig.cap="Table of ss"}
+kable(experimenter[order(-correct_p),] , col.names = c("Key", "Algorithm", "Accuracy (%)", "Significant different then ZeroR", "Significant different then AdaBoostM1"), row.names = FALSE) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+```
+Key & Run parameters:
+(1) rules.ZeroR '' 48055541465867954  
+(2) rules.OneR '-B 6' -3459427003147861443  
+(3) trees.J48 '-C 0.25 -M 2' -217733168393644444  
+(4) trees.RandomTree '-K 0 -M 1.0 -V 0.001 -S 1' -9051119597407396024  
+(5) meta.AdaBoostM1 '-P 100 -S 1 -I 10 -W trees.DecisionStump' -1178107808933117974  
+(6) functions.SMO '-C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"functions.supportVector.PolyKernel -E 1.0 -C 250007\" -calibrator \"functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4\"' -6585883636378691736  
+(7) functions.SimpleLogistic '-I 0 -M 500 -H 50 -W 0.0' 7397710626304705059   
+(8) bayes.NaiveBayes '' 5995231201785697655  
+(9) lazy.IBk '-K 1 -W 0 -A \"weka.core.neighboursearch.LinearNNSearch -A \\\"weka.core.EuclideanDistance -R first-last\\\"\"' -3080186098777067172  
+
+As we can see in the above table (figure \@ref(fig:run1-tab)) AdaBoostM1 scores, altough there is no significant difference with non-meta algorithms like SMO and SimpleLogistic. Other ensemble learners will be tested now.
+
+
+Dataset                   (5) meta.Ada | (1) rules (2) meta. (3) meta. (4) meta. (6) funct (7) funct (8) bayes
+--------------------------------------------------------------------------------------------------------------
+R_data_frame             (100)   85.82 |   55.34 *   84.54     85.53     86.20     85.73     85.68     85.40  
+--------------------------------------------------------------------------------------------------------------
+                               (v/ /*) |   (0/0/1)   (0/1/0)   (0/1/0)   (0/1/0)   (0/1/0)   (0/1/0)   (0/1/0)
+
+Key:
+(1) rules.ZeroR '' 48055541465867954  
+(2) meta.Bagging '-P 100 -S 1 -num-slots 1 -I 10 -W trees.REPTree -- -M 2 -V 0.001 -N 3 -S 1 -L -1 -I 0.0' -115879962237199703  
+(3) meta.Stacking '-X 10 -M \"trees.J48 -C 0.25 -M 2\" -S 1 -num-slots 1 -B \"functions.SMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K   \\\"functions.supportVector.PolyKernel -E 1.0 -C 250007\\\" -calibrator \\\"functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4\\\"\" -B   \"functions.SimpleLogistic -I 0 -M 500 -H 50 -W 0.0\" -B \"bayes.NaiveBayes \"' 5134738557155845452  
+(4) meta.Vote '-S 1 -B \"meta.AdaBoostM1 -P 100 -S 1 -I 10 -W trees.DecisionStump\" -B \"functions.SMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K   \\\"functions.supportVector.PolyKernel -E 1.0 -C 250007\\\" -calibrator \\\"functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4\\\"\" -B   \"functions.SimpleLogistic -I 0 -M 500 -H 50 -W 0.0\" -B \"bayes.NaiveBayes \" -R AVG' -637891196294399624  
+(5) meta.AdaBoostM1 '-P 100 -S 1 -I 10 -W trees.DecisionStump' -1178107808933117974  
+(6) functions.SMO '-C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"functions.supportVector.PolyKernel -E 1.0 -C 250007\" -calibrator   \"functions.SimpleLogistic -I 0 -M 500 -H 50 -W 0.0\"' -6585883636378691736  
+(7) functions.SimpleLogistic '-I 0 -M 500 -H 50 -W 0.0' 7397710626304705059  
+(8) bayes.NaiveBayes '' 5995231201785697655  
+                               
+                              
+```{r ensemble}
+algorithms <- c("ZeroR", "Bagging", "Stacking", "Vote", "AdaBoostM1", "SMO", "SimpleLogistic", "NaiveBayes")
+accuracy <- c(55.34, 84.54, 85.53, 86.20, 85.82, 85.73, 85.68, 85.40)
+stdeviation <- c(0.2, 3.61, 3.53, 3.37, 3.49, 3.46, 3.51, 3.32)
+stat_dif_ada <- c(T, F, F, F, F, F, F, F)
+
+ensemble <- data.frame(algorithm = algorithms, accuracy = accuracy, stdeviation = stdeviation, significance_ada = stat_dif_ada)
+ensemble <- tibble::rowid_to_column(ensemble, "Key")
+
+ggplot(ensemble, aes(x=reorder(algorithms, accuracy), y=accuracy, fill=significance_ada)) + 
+  geom_bar(stat = "identity") +
+  coord_flip() + ylim(c(0,100)) + ggtitle("Accuracy of models") + xlab("Algorithm") + ylab("Accuracy (%)")
+```
+
+
+```{r}
+kable(ensemble[order(-accuracy),] , col.names = c("Key", "Algorithm", "Accuracy (%)", "Standard deviation", "Significant different then AdaBoostM1"), row.names = FALSE) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+```
+Adaboost has a lower processing 
+```{r}
+# roc.smplog.stand <- read.arff("data/roc/roc_simplelog_stand.arff")
+# roc.smplog.cost <- read.arff("data/roc/roc_simplelog_0120.arff")
+# 
+# colourss <- hue_pal()(3)
+# stand <- ggplot(roc.smplog.stand) + 
+#   geom_path(aes(x = `False Positive Rate`, y=`True Positive Rate`, color = Threshold), size=1.5) + scale_colour_gradient2(low = "orange" ,mid = "mediumvioletred" ,high = "purple", midpoint = 0.5) + labs(color="P value positive")
+# 
+# cost <- ggplot(roc.smplog.cost) + 
+#   geom_path(aes(x = `False Positive Rate`, y=`True Positive Rate`, color = Threshold), size=1.5) + scale_colour_gradient2(low = "orange" ,mid = "mediumvioletred" ,high = "purple", midpoint = 0.5) + labs(color="P value positive")
+# 
+# ggarrange(stand,cost,
+#           ncol = 2, nrow = 2,
+#           labels = c("A", "B"))
+# 
+
+```
+
+```{r}
+
+drawplots <- function(filepath) {
+  files <- paste(filepath, list.files(filepath), sep = "/")
+  plots = lapply(files, genplot)
+  return(plots)
+}
+
+genplot <- function(x){
+  roc.load = read.arff(x)
+  pl <- ggplot(roc.load) + 
+   geom_path(aes(x = `False Positive Rate`, y=`True Positive Rate`, color = Threshold), size=1.5) + scale_colour_gradient2(low = "orange" ,mid = "mediumvioletred" ,high = "purple", midpoint = 0.5) + labs(color="P value positive") + ggtitle(x)
+  return(pl)
+}
+
+xs = drawplots("data/roc")
+do.call(ggarrange, c(xs, ncol = 2))
+```
+Area under curve is not calculated as it is not a good metric because the ratio between FP and FN is not the same. 
+False negatives weigh more as false negatives are patients who will not get any further diagnoses as they are deemed not having heart disease
+
+Further experimenting teaches that using a cost matrix of [0 1 3 0] decreases the amount of false negatives heavily. Using a voting algorithm in combination with a cost sensitive classifier performes worse then a cost sensitive classifier in with adaboost m1, using the previously mentioned cost matrix. 
+The resulting algorithm has an accuracy of 84.5% with the following confusion matrix: 
+   a   b   <-- classified as  
+ 295 115 |   a = FALSE  
+  27 481 |   b = TRUE  
+
+Using the same algorithm using the cost matrix of [0 1 1 0] will result in an accuracy of 85.7 and the following confusion matrix:
+   a   b   <-- classified as  
+ 345  65 |   a = FALSE  
+  66 442 |   b = TRUE  
+
+Increasing the FN costs to 3 will result in approximatly halving the amount of false negative results doubling the amount of false postitives while reducing the overall accuracy by rougly 1.2%.
+Increasing the costs of false negatives any further will create a lot more false positives which will increase monitary costs while false negatives will not be reduced in the same rate as the increase of false positives.
+
+The precise setting is no exact science so the resulting algorithm used will be a cost sensitive adaboostm1 model with cost matrix set to [0 1 3 0]. 
+Weka Scheme: **weka.classifiers.meta.CostSensitiveClassifier -cost-matrix "[0.0 1.0; 3.0 0.0]" -S 1 -W weka.classifiers.meta.AdaBoostM1 -- -P 100 -S 1 -I 10 -W weka.classifiers.trees.DecisionStump** 
+This will result in an overall accuracy of 84.5%
+
+Since Adaboost m1 is used the data needs to be checked for large outliers as Adaboost tries to correct outliers and tries to prevent missclassification.
+Reducing the amount of attributes does not increase model accuracy.
