@@ -78,8 +78,8 @@ cran_link = c("https://cran.r-project.org/web/packages/ggplot2", "https://cran.r
 tool.df = data.frame(name = tools, version = getversion(tools), links = cran_link)
 kable(as_tibble(tool.df), caption = "Used R libraries") %>%
   kable_styling(latex_options = "HOLD_position")
-
 ```
+
 ### Model creation  
 Weka (version 3.9.5) [@hornik2009] was used for the creation of the machine learning model.
 
@@ -125,8 +125,6 @@ h.oldpeak <- ggplot(heartdata) + geom_histogram(aes(Oldpeak), fill=colours[4])
 ggarrange(h.restingbp, h.cholesterol, h.maxHR, h.oldpeak + rremove("x.text"),
           ncol = 2, nrow = 2,
           labels = c("A", "B", "C", "D"))
-
-
 ```
   
 Figure \@ref(fig:hist-multi) shows that data is quite normally distributed. Altough there are some values with very high counts. Notable cholesterol (B) with a very high count of 0 mm/dl (n = `r sum(heartdata$Cholesterol == 0)`) and oldpeak (D) with a very high count of 0 ST.
@@ -185,7 +183,6 @@ ggplot(heartdata) +
   labs(title = "Sexes")  + 
   ylab("Datapoints")
 p <- prop.table(table(heartdata$Sex))
-
 ```
 As visible in the above figure (figure \@ref(fig:ratio-mf)) the ratio of female(`r round(p["F"] * 100, 2)`%) to male(`r round(p["M"] * 100, 2)`%) is very skewed towards males. The ratio of a positive diagnosis is obviously different. Males tend to have on average a positive HD diagnosis, whereas females have a negative diagnosis.  
 
@@ -246,6 +243,7 @@ fviz_pca_var(res.pca,
              title= "PCA Variable plot"
              )
 ```
+
 Figure \@ref(fig:pca-var) shows that both ASY and NAP are the biggest contributors between a positive or negative diagnoses. As previously mentioned, it is also visible here that an ST_Slope up lowers the chance of HD while ST_Slope down has a positive correlation with HD.
 
 \newpage
