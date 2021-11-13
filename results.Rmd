@@ -8,6 +8,12 @@ title: "EDA Results"
 subtitle: "Heart Failure Prediction Dataset"
 ---
 
+```{r license, echo=FALSE}
+# Copyright (c) 2021 <Sander J. Bouwman>.
+# Licensed under GPLv3. See gpl.md
+```
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
@@ -25,7 +31,7 @@ library(ggpubr)
 # Results  
 
 ```{r data parsing, echo=F}
-heartdata <- read.table("data/heart_cleaned.csv", sep=",", header=TRUE)
+heartdata <- read.table("data/heart_cleaned_report.csv", sep=",", header=TRUE)
 ```
 ## Cleaning
 Datacleaning was done on multiple variables. Column ChestPainType originally categorical data was split out into 4 new columns containing logical data. This was also performed for the ST_Peak column which was split into 3 new colums containing logical data. There were no missing datafields.

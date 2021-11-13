@@ -1,5 +1,5 @@
 ---
-title: "EDA of the heartdisease dataset"
+title: "Logbook of the heartdisease dataset"
 author: "Sander J. Bouwman"
 date: "27/09/2021"
 output:
@@ -13,6 +13,11 @@ output:
 
 ---
 
+```{r license, echo=FALSE}
+# Copyright (c) 2021 <Sander J. Bouwman>.
+# Licensed under GPLv3. See gpl.md
+```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
@@ -25,7 +30,6 @@ library(tibble)
 library(RWeka)
 library(ggpubr)
 library(pROC)
-
 ```
 \newpage
 # Logbook EDA
@@ -318,9 +322,7 @@ kable(mlresults[order(mlresults$accuracy, decreasing = T), ], col.names = c("Alg
 ```
 \pagebreak
 
-## Analysis of multiple ML algorithms first run
-
-
+## Analysis of multiple ML algorithms  
 A fair amount of algorithms are significantly better then ZeroR, With al of them having an accuracy => 80%.
 
 ```{r}
@@ -343,37 +345,9 @@ ggplot(experimenter, aes(x=reorder(algorithm, accuracy), y=accuracy, fill=signif
 kable(experimenter[order(-correct_p),] , col.names = c("Key", "Algorithm", "Accuracy (%)", "Significant different then ZeroR", "Significant different then AdaBoostM1"), row.names = FALSE) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 ```
-Key & Run parameters:
-(1) rules.ZeroR '' 48055541465867954  
-(2) rules.OneR '-B 6' -3459427003147861443  
-(3) trees.J48 '-C 0.25 -M 2' -217733168393644444  
-(4) trees.RandomTree '-K 0 -M 1.0 -V 0.001 -S 1' -9051119597407396024  
-(5) meta.AdaBoostM1 '-P 100 -S 1 -I 10 -W trees.DecisionStump' -1178107808933117974  
-(6) functions.SMO '-C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"functions.supportVector.PolyKernel -E 1.0 -C 250007\" -calibrator \"functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4\"' -6585883636378691736  
-(7) functions.SimpleLogistic '-I 0 -M 500 -H 50 -W 0.0' 7397710626304705059   
-(8) bayes.NaiveBayes '' 5995231201785697655  
-(9) lazy.IBk '-K 1 -W 0 -A \"weka.core.neighboursearch.LinearNNSearch -A \\\"weka.core.EuclideanDistance -R first-last\\\"\"' -3080186098777067172  
 
 As we can see in the above table (figure \@ref(fig:run1-tab)) AdaBoostM1 scores, altough there is no significant difference with non-meta algorithms like SMO and SimpleLogistic. Other ensemble learners will be tested now.
 
-
-Dataset                   (5) meta.Ada | (1) rules (2) meta. (3) meta. (4) meta. (6) funct (7) funct (8) bayes
---------------------------------------------------------------------------------------------------------------
-R_data_frame             (100)   85.82 |   55.34 *   84.54     85.53     86.20     85.73     85.68     85.40  
---------------------------------------------------------------------------------------------------------------
-                               (v/ /*) |   (0/0/1)   (0/1/0)   (0/1/0)   (0/1/0)   (0/1/0)   (0/1/0)   (0/1/0)
-
-Key:
-(1) rules.ZeroR '' 48055541465867954  
-(2) meta.Bagging '-P 100 -S 1 -num-slots 1 -I 10 -W trees.REPTree -- -M 2 -V 0.001 -N 3 -S 1 -L -1 -I 0.0' -115879962237199703  
-(3) meta.Stacking '-X 10 -M \"trees.J48 -C 0.25 -M 2\" -S 1 -num-slots 1 -B \"functions.SMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K   \\\"functions.supportVector.PolyKernel -E 1.0 -C 250007\\\" -calibrator \\\"functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4\\\"\" -B   \"functions.SimpleLogistic -I 0 -M 500 -H 50 -W 0.0\" -B \"bayes.NaiveBayes \"' 5134738557155845452  
-(4) meta.Vote '-S 1 -B \"meta.AdaBoostM1 -P 100 -S 1 -I 10 -W trees.DecisionStump\" -B \"functions.SMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K   \\\"functions.supportVector.PolyKernel -E 1.0 -C 250007\\\" -calibrator \\\"functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4\\\"\" -B   \"functions.SimpleLogistic -I 0 -M 500 -H 50 -W 0.0\" -B \"bayes.NaiveBayes \" -R AVG' -637891196294399624  
-(5) meta.AdaBoostM1 '-P 100 -S 1 -I 10 -W trees.DecisionStump' -1178107808933117974  
-(6) functions.SMO '-C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"functions.supportVector.PolyKernel -E 1.0 -C 250007\" -calibrator   \"functions.SimpleLogistic -I 0 -M 500 -H 50 -W 0.0\"' -6585883636378691736  
-(7) functions.SimpleLogistic '-I 0 -M 500 -H 50 -W 0.0' 7397710626304705059  
-(8) bayes.NaiveBayes '' 5995231201785697655  
-                               
-                              
 ```{r ensemble}
 algorithms <- c("ZeroR", "Bagging", "Stacking", "Vote", "AdaBoostM1", "SMO", "SimpleLogistic", "NaiveBayes")
 accuracy <- c(55.34, 84.54, 85.53, 86.20, 85.82, 85.73, 85.68, 85.40)
@@ -388,6 +362,15 @@ ggplot(ensemble, aes(x=reorder(algorithms, accuracy), y=accuracy, fill=significa
   coord_flip() + ylim(c(0,100)) + ggtitle("Accuracy of models") + xlab("Algorithm") + ylab("Accuracy (%)")
 ```
 
+Params: 
+(1) rules.ZeroR '' 48055541465867954  
+(2) meta.Bagging '-P 100 -S 1 -num-slots 1 -I 10 -W trees.REPTree -- -M 2 -V 0.001 -N 3 -S 1 -L -1 -I 0.0' -115879962237199703  
+(3) meta.Stacking '-X 10 -M \"trees.J48 -C 0.25 -M 2\" -S 1 -num-slots 1 -B \"functions.SMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K   \\\"functions.supportVector.PolyKernel -E 1.0 -C 250007\\\" -calibrator \\\"functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4\\\"\" -B   \"functions.SimpleLogistic -I 0 -M 500 -H 50 -W 0.0\" -B \"bayes.NaiveBayes \"' 5134738557155845452  
+(4) meta.Vote '-S 1 -B \"meta.AdaBoostM1 -P 100 -S 1 -I 10 -W trees.DecisionStump\" -B \"functions.SMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K   \\\"functions.supportVector.PolyKernel -E 1.0 -C 250007\\\" -calibrator \\\"functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4\\\"\" -B   \"functions.SimpleLogistic -I 0 -M 500 -H 50 -W 0.0\" -B \"bayes.NaiveBayes \" -R AVG' -637891196294399624  
+(5) meta.AdaBoostM1 '-P 100 -S 1 -I 10 -W trees.DecisionStump' -1178107808933117974  
+(6) functions.SMO '-C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"functions.supportVector.PolyKernel -E 1.0 -C 250007\" -calibrator   \"functions.SimpleLogistic -I 0 -M 500 -H 50 -W 0.0\"' -6585883636378691736  
+(7) functions.SimpleLogistic '-I 0 -M 500 -H 50 -W 0.0' 7397710626304705059  
+(8) bayes.NaiveBayes '' 5995231201785697655  
 
 ```{r}
 kable(ensemble[order(-accuracy),] , col.names = c("Key", "Algorithm", "Accuracy (%)", "Standard deviation", "Significant different then AdaBoostM1"), row.names = FALSE) %>%
@@ -430,10 +413,10 @@ genplot <- function(x){
 xs = drawplots("data/roc")
 do.call(ggarrange, c(xs, ncol = 2))
 ```
-Area under curve is not calculated as it is not a good metric because the ratio between FP and FN is not the same. 
+Area under curve is calculated but will not be used as it is not a good metric as the ratio between FP and FN intentionally not the same. 
 False negatives weigh more as false negatives are patients who will not get any further diagnoses as they are deemed not having heart disease
 
-Further experimenting teaches that using a cost matrix of [0 1 3 0] decreases the amount of false negatives heavily. Using a voting algorithm in combination with a cost sensitive classifier performes worse then a cost sensitive classifier in with adaboost m1, using the previously mentioned cost matrix. 
+Further experimenting teaches that using a cost matrix of [0 1 3 0] decreases the amount of false negatives effectively. Using a voting algorithm in combination with a cost sensitive classifier performes worse then a cost sensitive classifier in with adaboost m1, using the previously mentioned cost matrix. 
 The resulting algorithm has an accuracy of 84.5% with the following confusion matrix: 
    a   b   <-- classified as  
  295 115 |   a = FALSE  
@@ -453,5 +436,7 @@ This will result in an overall accuracy of 84.5%
 
 Since Adaboost m1 is used the data needs to be checked for large outliers as Adaboost tries to correct outliers and tries to prevent missclassification.
 Reducing the amount of attributes does not increase model accuracy.
+
+
 
 

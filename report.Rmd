@@ -5,11 +5,19 @@ author: "Sander J. Bouwman"
 date: "11/12/2021"
 output: bookdown::pdf_document2
 keep_tex: yes
-bibliography: references.bib
 link-citations: yes
+bibliography: references.bib
+
     
 header-includes: \usepackage{float}
 ---
+
+```{r license, echo=FALSE}
+# Copyright (c) 2021 <Sander J. Bouwman>.
+# Licensed under GPLv3. See gpl.md
+```
+
+
 ```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(echo = TRUE)
