@@ -156,7 +156,10 @@ In the figure above (figure \@ref(fig:hist-age) ) it is visible that the percent
 
 ```{r hr-age, out.width="65%", echo=FALSE, fig.align='center', fig.cap="Percentage of patients affected by HD by age"}
 ggplot(heartdata) + 
-  geom_smooth(aes(Age, HeartDisease * 100), method="loess", formula = "y ~ x", color=hue_pal()(1), fill = hue_pal()(2)[2]) + 
+  geom_smooth(aes(Age, HeartDisease * 100), 
+              method="loess", formula = "y ~ x", 
+              color=hue_pal()(1), 
+              fill = hue_pal()(2)[2]) + 
   ylab("Heart Disease (%)") + 
   ggtitle("Prevalence of heart disease with age") + 
   ylim(c(0, 100)) +
@@ -223,7 +226,6 @@ fviz_pca_biplot(res.pca,
                 axes=c(1,2),
                 legend.title = "Heart disease",
                 title = "PCA Biplot")
-                
 ```
 In the above figure (figure \@ref(fig:pca-bi)) two clusters are visible. The postive (turqoise) cluster seems to be in correlation with ASY (asymptomic pain). Whereas there are two distinct negative clusters. The left upper cluster is affected by ATA, Max heartrate and cholesterol, while the left down clusters is effected by NAP.
 
