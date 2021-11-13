@@ -1,0 +1,274 @@
+---
+title: "Using machine learning to diagnose early heart disease"
+subtitle: "Report"
+author: "Sander J. Bouwman"
+date: "11/12/2021"
+output: bookdown::pdf_document2
+keep_tex: yes
+bibliography: references.bib
+link-citations: yes
+    
+header-includes: \usepackage{float}
+---
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+library(kableExtra)
+library(tibble)
+library(ggplot2)
+library(scales)
+library(ggcorrplot)
+library(reshape2)
+library(factoextra)
+library(ggpubr)
+```
+
+\newpage
+# Introduction  
+ 
+Currently, heart disease is the number one leading cause of death, with more than 17 million deaths annually [@FINEGOLD2013934]. These deaths account for more than 30% of all deaths worldwide. An early detection of possible heart disease could prevent a lot of future deaths. Machine learning could play a significant role in the early detection of heart disease. Currently, heart disease is diagnosed by a combination of blood test, ECG, breathing tests and chest x-rays test. For mass screening, it would be best to provide an accurate prediction of developing heart disease with the least amount of tests. Preferable, tests that can be performed at a general practitioner, which prevents unnecessary hospital visits. The goal of this research was to create an accurate model that uses easy data which could easily be gathered at a general practitioner.
+
+# Materials & Methods
+## Materials
+### Original data
+The data used is a public accessible dataset found at Kaggle. The used dataset can be found at https://www.kaggle.com/fedesoriano/heart-failure-prediction.
+The author of this dataset is [@Fedesoriano2021]. This dataset consists of 5 combined datasets, which makes this dataset the largest heart disease dataset so far. The five datasets used are: 
+-Cleveland: 303 observations  
+-Hungarian: 294 observations  
+-Switzerland: 123 observations  
+-Long Beach VA: 200 observations    
+-Stalog (Heart) Data Set: 270 observations   
+The individual datasets can be accessed at: https://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/  
+
+The dataset has a total of 11 parameters, which can be explored further in the underlying table (table: \@ref(tab:attributes)).
+
+```{r attributes, echo=FALSE, fig.pos="H"}
+dataset <- read.csv("data/attribute_information.csv", sep=";")
+kable(as_tibble(dataset), caption = "Attribute Information") %>%
+  kable_styling(latex_options = "HOLD_position") %>% 
+  kable_styling(latex_options="scale_down")
+```
+
+### Data cleaning  
+Data cleaning was performed using R [@r2021] with various libraries. An overview of the used libraries can be found in the underlying table (table: \@ref(tab:tooltable)).
+
+```{r tooltable, echo=FALSE, fig.pos="H"}
+getversion <- function(packagenames){
+  version <- c()
+  for (package in packagenames){
+    version <- c(version, paste(packageVersion(package), sep = "."))
+  }
+  return(version)
+
+}
+tools = c("ggplot2", "kableExtra", "scales", "ggcorrplot", "reshape2", "factoextra", "tibble", "RWeka", "ggpubr")
+cran_link = c("https://cran.r-project.org/web/packages/ggplot2", "https://cran.r-project.org/web/packages/kableExtra",
+              "https://cran.r-project.org/web/packages/scales", "https://cran.r-project.org/web/packages/ggcorrplot",
+              "https://cran.r-project.org/web/packages/reshape2", "https://cran.r-project.org/web/packages/factoextra",
+              "https://cran.r-project.org/web/packages/tibble", "https://cran.r-project.org/web/packages/RWeka",
+              "https://cran.r-project.org/web/packages/ggpubr")
+tool.df = data.frame(name = tools, version = getversion(tools), links = cran_link)
+kable(as_tibble(tool.df), caption = "Used R libraries") %>%
+  kable_styling(latex_options = "HOLD_position")
+
+```
+### Model creation  
+Weka (version 3.9.5) [@hornik2009] was used for the creation of the machine learning model.
+
+### Java wrapper  
+A Java library by @hornik2009 was used for the creation of a Java application. Which makes it possible to use the model using an CLI. 
+
+## Methods  
+Data cleaning was performed in R. Most categorical data was split out into logical attributes. For example; HeartPainType was split into 4 seperate columns. 
+The logbook created for this research can be found on GitHub at https://github.com/devalk96/Thema09. PDF file can be found using this direct link: https://github.com/devalk96/Thema09/blob/main/log.pdf.
+The resulting Java implementation can also be found on GitHub at https://github.com/devalk96/Thema09-JavaWrapper.
+\newpage
+
+# Results  
+```{r data parsing, echo=F}
+heartdata <- read.table("data/heart_cleaned_report.csv", sep=",", header=TRUE)
+```
+## Cleaning
+Datacleaning was done on multiple variables. Column ChestPainType originally categorical data was split out into 4 new columns containing logical data. This was also performed for the ST_Peak column which was split into 3 new colums containing logical data. There were no missing datafields.
+
+\pagebreak
+## Heart disease (HD)  
+
+```{r hd-count, echo = F, fig.align='center', out.width="65%", fig.cap="Count of heart disease"}
+ggplot(heartdata) +
+   geom_bar(aes(HeartDisease, fill=HeartDisease)) + 
+   theme(legend.position="none") +
+  labs(title = "Ratio (un)diseased")  + 
+  xlab("Has heart disease")
+
+hd_ratio <- table(heartdata$HeartDisease)
+hd_ratio.prop <- prop.table(hd_ratio)
+```
+The ratio patients having HD is 55% (n=508) \@ref(fig:hd-count) while 45% (n=410) has no HD, altough there is a slight balance but is still acceptable.
+  
+```{r hist-multi, echo = F, fig.align='center', out.width="65%", fig.cap="Distributions of restingbp, cholesterol, maxhr and oldpeak", message=FALSE, warning=FALSE}
+colours = hue_pal()(4)
+
+h.restingbp <- ggplot(heartdata) + geom_histogram(aes(RestingBP), fill=colours[1])
+h.cholesterol <- ggplot(heartdata) + geom_histogram(aes(Cholesterol), fill=colours[2])
+h.maxHR <- ggplot(heartdata) + geom_histogram(aes(MaxHR), fill=colours[3], bins=25)
+h.oldpeak <- ggplot(heartdata) + geom_histogram(aes(Oldpeak), fill=colours[4])
+
+ggarrange(h.restingbp, h.cholesterol, h.maxHR, h.oldpeak + rremove("x.text"),
+          ncol = 2, nrow = 2,
+          labels = c("A", "B", "C", "D"))
+
+
+```
+  
+Figure \@ref(fig:hist-multi) shows that data is quite normally distributed. Altough there are some values with very high counts. Notable cholesterol (B) with a very high count of 0 mm/dl (n = `r sum(heartdata$Cholesterol == 0)`) and oldpeak (D) with a very high count of 0 ST.
+
+\pagebreak
+## Excercise angina  
+
+```{r excercise-ani, echo = F, fig.align='center', out.width="65%", fig.cap="Effect of exercise angina on HD", message=FALSE}
+ggplot(heartdata) + geom_bar(aes(ExerciseAngina, fill=HeartDisease))
+```
+In figure \@ref(fig:excercise-ani) it is visible that having excersise angina has a much higher chance of having HD in comparison to not having excercise angina.
+
+\pagebreak
+## ST-Slope  
+
+```{r st-slope, echo=F, fig.align='center', out.width="65%", fig.cap="Relationship between heart slope and heart disease"}
+ggplot(heartdata) + geom_bar(aes(`ST_Slope`, fill=HeartDisease))
+```
+  
+Figure \@ref(fig:st-slope) shows that having an UP ST slope depression significantly lowers the chance of HD, when comparing this with a down or flat slope. Both down and flat ST slopes give a much heigher chance of having HD. ST slope down is fairly rare in this dataset.
+
+\pagebreak
+## Age
+
+```{r hist-age, echo = F, fig.align='center', out.width="65%", fig.cap="Distribution of age grouped by HD diagnoses"}
+ggplot(heartdata, aes(Age, fill=HeartDisease)) + 
+  geom_histogram(bins=12) + 
+  geom_vline(aes(xintercept=mean(Age[HeartDisease==F]), colour="Mean age without HD"),  size=1, linetype="dashed") + 
+  geom_vline(aes(xintercept=mean(Age[HeartDisease==T]), colour="Mean age with HD"),  size=1, linetype="dashed") +
+  scale_color_manual(name="Means", values =c("dodgerblue1", "red")) + 
+    guides(col = guide_legend(override.aes = list(shape = 15, size=5))) + 
+  ggtitle("Histogram of age and HD")
+```
+In the figure above (figure \@ref(fig:hist-age) ) it is visible that the percentage of patients with HD shifts to the majority with age. After the age of around 70, this percentage seems to shrink again. Using the dotted vertical lines, we can see that there is a difference in mean age in persons with or without HD. The mean age of persons with HD is ~56 years, whereas the mean age of persons without HD is ~51 years. The histogram is itself shows a decent normal distribution in age in the dataset. To further explore the possible relation/correlation between age and the prevalence of HD, another plot is used. 
+
+```{r hr-age, out.width="65%", echo=FALSE, fig.align='center', fig.cap="Percentage of patients affected by HD by age"}
+ggplot(heartdata) + 
+  geom_smooth(aes(Age, HeartDisease * 100), method="loess", formula = "y ~ x", color=hue_pal()(1), fill = hue_pal()(2)[2]) + 
+  ylab("Heart Disease (%)") + 
+  ggtitle("Prevalence of heart disease with age") + 
+  ylim(c(0, 100)) +
+  geom_abline(color="dodgerblue1", linetype="dashed")
+```
+
+Figure \@ref(fig:hr-age) shows the relation between age and prevalence of HD. Both ends show a major wide area of heart disease (percentage) while the overall trend shows a clear increase of HD with an increase of age. The percentage of patients with a positive HD diagnosis at age 30 is around 25%, whereas patients age 65 have a 75% positive diagnosis rate. As visible both figure 1 and in figure 2 it is visible that the percentage of positive diagnosis lowers after age 65.
+
+\pagebreak
+## Sex
+```{r ratio-mf, out.width="65%", echo=FALSE, fig.align='center', fig.cap="Ratio of sex grouped by HD diagnosis"}
+# counts (or sums of weights)
+ggplot(heartdata) + 
+  geom_bar(aes(Sex, fill=HeartDisease)) + 
+  labs(title = "Sexes")  + 
+  ylab("Datapoints")
+p <- prop.table(table(heartdata$Sex))
+
+```
+As visible in the above figure (figure \@ref(fig:ratio-mf)) the ratio of female(`r round(p["F"] * 100, 2)`%) to male(`r round(p["M"] * 100, 2)`%) is very skewed towards males. The ratio of a positive diagnosis is obviously different. Males tend to have on average a positive HD diagnosis, whereas females have a negative diagnosis.  
+
+To further visiualize if the density of age with sex is roughtly the same the underlying figure was generated. 
+```{r density-age, out.width="65%", echo=FALSE, fig.align='center', fig.cap="Density plot of ages grouped by sex"}
+ggplot(heartdata) + 
+  geom_density(aes(Age, colour=Sex, fill=Sex), alpha=0.05) + 
+  ggtitle("Age density plot")
+```
+Figure \@ref(fig:density-age) shows that both sexes have an about even amount of age groups. Where males have a higher representation in the ages 55+ years, and females have a larger (relative for females) representation lower than 55 years. 
+
+\newpage
+## Pain types
+To bring an easier understanding of different chestpain types (CPT), the underlying table can be used.
+Pain type:   
+
+| Code | Type | Explanation |
+|---|---|---|
+| TA | Typical Angina | Meets all three of the following characteristics: 1. Substernal chest discomfort of characteristic quality and duration 2. Provoked by extortion or emotional stress 3. Relieved by rest and/or nitrates within minutes. |
+| ATA | Atypical Angina | Meets two of the above characteristics |
+| NAP | Non-Anginal Pain | Lacks or meets only one or none of the characteristics |
+| ASY | Asymptomatic Pain |  |
+
+```{r chestpain-outcome, out.width="65%", echo=FALSE, fig.align='center', fig.cap="Ratio of diagnosis grouped by chestpain type"}
+ggplot(heartdata) +
+  geom_bar(aes(ChestPainType, fill=HeartDisease)) +
+  ggtitle("Chestpaintype outcome")
+```
+Note: For the creation of the PCA plots the categorical variable ChestPainType was split into multiple numerical values containting columns.
+
+As visible see in the above figure (figure \@ref(fig:chestpain-outcome)) the uttermost CPT with HD is asymptotic pain. After that Non-Angical Pain is the highest although more patients with NAP have no diagnosed HD, the same can be seen in TA where the ratio between having and not having HD is roughly the same as in NAP. ATA has by far the lowest ratio of diagnosed HD.
+
+\newpage
+## PCA plotting
+```{r pca-bi, fig.align="center", out.width="50%", echo=FALSE, fig.cap="PCA Biplot of all non-categoral variables"}
+heartdata.active = heartdata[, c(1,4,5,6,8,13:19)]
+res.pca <- prcomp(heartdata.active, scale = TRUE)
+
+fviz_pca_biplot(res.pca,
+                col.var = "#2E9FDF", # Variables color
+                col.ind = heartdata$HeartDisease,
+                label = "var",
+                addEllipses = TRUE,
+                geom.var = c("arrow", "text"),
+                ellipse.type = "t",
+                axes=c(1,2),
+                legend.title = "Heart disease",
+                title = "PCA Biplot")
+                
+```
+In the above figure (figure \@ref(fig:pca-bi)) two clusters are visible. The postive (turqoise) cluster seems to be in correlation with ASY (asymptomic pain). Whereas there are two distinct negative clusters. The left upper cluster is affected by ATA, Max heartrate and cholesterol, while the left down clusters is effected by NAP.
+
+To further see the contribution of each variable the underlying figure was generated.
+```{r pca-var, fig.align="center", out.width="50%", echo=FALSE, fig.cap="PCA Variable plot of all non-categoral variables"}
+fviz_pca_var(res.pca,
+             col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE,
+             title= "PCA Variable plot"
+             )
+```
+Figure \@ref(fig:pca-var) shows that both ASY and NAP are the biggest contributors between a positive or negative diagnoses. As previously mentioned, it is also visible here that an ST_Slope up lowers the chance of HD while ST_Slope down has a positive correlation with HD.
+
+\newpage
+# Discussion & Conclusion  
+## Discussion  
+The undiseased to diseased ratio is not fully balanced (0.45 to 0.55 ratio), but this is not critical. There seems to be quite a lot of patients where cholesterol is not measured and defaulted to 0 mm/dl (n=`r sum(heartdata$Cholesterol == 0)`) (see figure \@ref(fig:hist-multi)). 
+Currently, asymptomatic pain is the major point of differentiation. Asymptomatic pain is not something usable in itself, as it is not measurable by patient nor caregiver. If asymptomatic pain is removed, it might still be possible to create a reliable prediction of HD if an appropriate algorithm is used. But using asymptomatic pain in combination with other variables is might still be used to increase prediction accuracy.  
+Furthermore the data is highly skewed towards males. Of these males a very large percentage (`r round(prop.table(table(heartdata[heartdata$Sex == "M", ]$HeartDisease))[2] * 100,0)`%) have HD while females have a far lower ratio of heart disease (`r round(prop.table(table(heartdata[heartdata$Sex == "F", ]$HeartDisease))[2] * 100,0)`%). In the real-world males have a slightly higher chance of heart disease but as big as this dataset implies. For further research, it would benefit if more female data would be added to the dataset with a better HD ratio then the current situation. Looking at figure \@ref(fig:pca-bi), it seems that cholesterol has a positive effect on HD, a higher cholesterol generally increases the chance of heart disease, which seems counterintuitive with this dataset. 
+The sudden lowering of patients with HD above the age of 65 might be explained by the fact that patients older than 65 simply die due to their HD. 
+
+The current dataset seems to be cleaned well enough, depending on the used algorithm some changes might be necessary, factorizing certain variables such as age, cholesterol, max hr and oldpeak might be needed. During EDA, it was found that certain variables such as cholesterol had a high count of the same values, for example cholesterol had a very large count of 0 mg/dl, the dataset source doesn't provide a reason, but it is suspected that this is due to no measurements available and defaulting to 0, the same could be said for the variable oldpeak where there are also a lot of instances with the value 0. 
+
+## Conclusion
+Age seems a decent indicator in the diagnosis of heart disease. This is confirmed by the PCA plots (figures \@ref(fig:pca-bi) & \@ref(fig:pca-var)) where it shows that it is a small but  meaningful indicator. Asymptomatic pain seems to be the major indicator in the diagnosis of HD As visible in figure \@ref(fig:chestpain-outcome), the presence of asymptomic pain is a large indicator of a positive HD diagnosis as 79% percent of asymptomic pain patients have diagnosed HD The PCA variable plot (figure \@ref(fig:pca-var)) also confirms this as NAP has a large contribution. NAP has a high contribution to a negative diagnosis according to figure \@ref(fig:pca-var). Figure \@ref(fig:chestpain-outcome) confirms this as a large amount of patients experiencing NAP (64.5%) has a negative HD diagnosis. ATA has a low (13.9%) positivity rate of HD, this also shows in the PCA plot (figure \@ref(fig:pca-var)) as ATA has relative smaller overall contribution. Having a UP ST slope depression lessens the chance of HD significantly. It also seems that non-numerical variables have a higher contribution than numerical variables.
+
+As visible by the data, it is probable that it is possible to predict heart disease with fair accuracy on this dataset, although it is not probable that it is accurate on real-world data as there are significant differences between the used dataset and real-world data.
+
+\newpage  
+# Project proposal for minor  
+There are multiple possibilities in which this research can be improved. These possiblities are written for the minor Application Design.
+## Current issues:
+The current Java application is not very user-friendly in the sense that it is a desktop CLI application, and demands some basic knowledge about command line interfaces and version control using GIT. A web application would remove this hurdle and make it more accessible. Another point in which the software could be improved is the input data. The current input demands hard coded variable string or  a .ARFF file. Making the input more dynamic would be easier to work with.   
+
+## Goal  
+There are several possibilities in which the user-friendliness might be improved. A web application in combination with a web API would the model very dynamic and could be used in most environments. Health practitioners could use the tool to gain a quick insight in the current risk for heart disease in a patient. Larger hospitals would be able to use an API to check a large amount of patients quickly. Although a simple offline API would also suffice in the last mentioned situation. 
+
+## Target audience  
+The target audience would be mainly first line health care providers such as general practitioners. The main appliance of this tool would be a quick assessment in the possible change of (developing) heart disease. This would decrease second line healthcare demand as fewer patients would need further testing in hospital.
+
+## Design  
+As previously stated, the current input is very strict and not dynamic at all. The current output is also not very user-friendly, as a simple output is provided.
+This simple output might not be trusted by users, because there is no clear why/how to the output. An increase in details and info of the output would make the output more trustworthy. For example, if the algorithm is switched towards a tree model where a clear decision tree is constructed. This decision tree shows why a patient is flagged as positive or negative.
+
+
+\newpage  
+# References  
