@@ -24,7 +24,6 @@ library(reshape2)
 library(factoextra)
 library(tibble)
 library(ggpubr)
-
 ```
 
 \pagebreak
@@ -62,8 +61,6 @@ h.oldpeak <- ggplot(heartdata) + geom_histogram(aes(Oldpeak), fill=colours[4])
 ggarrange(h.restingbp, h.cholesterol, h.maxHR, h.oldpeak + rremove("x.text"),
           ncol = 2, nrow = 2,
           labels = c("A", "B", "C", "D"))
-
-
 ```
   
 Figure \@ref(fig:hist-multi) shows that data is quite normally distributed. Altough there are some values with very high counts. Notable cholesterol (B) with a very high count of 0 mm/dl (n = `r sum(heartdata$Cholesterol == 0)`) and oldpeak (D) with a very high count of 0 ST.
@@ -168,7 +165,6 @@ fviz_pca_biplot(res.pca,
                 axes=c(1,2),
                 legend.title = "Heart disease",
                 title = "PCA Biplot")
-                
 ```
 In the above figure (figure \@ref(fig:pca-bi)) two clusters are visible. The postive (turqoise) cluster seems to be in correlation with ASY (asymptomic pain). Whereas there are two distinct negative clusters. The left upper cluster is affected by ATA, Max heartrate and cholesterol, while the left down clusters is effected by NAP.
 
@@ -178,9 +174,7 @@ fviz_pca_var(res.pca,
              col.var = "contrib", 
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
              repel = TRUE,
-             title= "PCA Variable plot"
-             )
-
+             title= "PCA Variable plot")
 ```
 Figure \@ref(fig:pca-var) shows that both ASY and NAP are the biggest contributors between a positive or negative diagnoses. As previously mentioned, it is also visible here that an ST_Slope up lowers the chance of HD while ST_Slope down has a positive correlation with HD.
 
