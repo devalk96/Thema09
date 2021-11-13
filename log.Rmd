@@ -3,11 +3,14 @@ title: "EDA of the heartdisease dataset"
 author: "Sander J. Bouwman"
 date: "27/09/2021"
 output:
-  pdf_document: 
+  bookdown::pdf_document2: 
     toc: true
     toc_depth: 3
     fig_caption: yes
+    keep_tex: yes
+    link-citations: yes
     extra_dependencies: ["flafter"]
+
 ---
 
 ```{r setup, include=FALSE}
@@ -63,11 +66,6 @@ heartdata$ST_Slope_Up = as.logical(flags$Up)
 # Changes Y/N to Boolean
 heartdata$ExerciseAngina = heartdata$ExerciseAngina == "Y"
 heartdata$FastingBS = as.logical(heartdata$FastingBS)
-
-
-
-
-
 ```
 
 ```{r get data types}
@@ -81,28 +79,6 @@ kable(codebook, caption = "Codebook") %>%
   kable_styling(latex_options = c("hold_position"))
 ```
 
-## TODO add description
-```{r, eval=FALSE}
-
-                 # "description" = c("Age in years",
-                 #                   "",
-                 #                   "See underlying pain types",
-                 #                   "measured in mm/Hg",
-                 #                   "Cholesterol in serum (mm/dl)",
-                 #                   "1: if FastingBS > 120 mg/dl, 0: otherwise",
-                 #                   "[Normal: Normal, ST: having ST-T wave abnormality (T wave inversions and/or ST elevation or depression of > 0.05 mV), LVH: showing probable or definite left ventricular hypertrophy by Estes' criteria]",
-                 #                   "between 60 and 202",
-                 #                   "Excercise induced Angina",
-                 #                   "Oldpeak Numeric value measured in depression",
-                 #                   "ST_Slope the slope of the peak exercise ST segment [Up: upsloping, Flat: flat, Down: downsloping]",
-                 #                   "Has heartdisease",
-                 #                   "Asymptomic pain",
-                 #                   "Atypical Angina",
-                 #                   "Non-Anginal Pain",
-                 #                   "Typical Angina -> Meets all three of the following characteristics: 1. Substernal chest discomfort of characteristic quality and duration 2. Provoked by extortion or emotional stress 3. Relieved by rest and/or nitrates within minutes. ", "Slope Flat", "Slope Down", "Slope Up"
-                 #                   )
-
-```
 ## Summary
 ```{r Summary}
 summ <- summary(heartdata[c("Age", "RestingBP", "Cholesterol", "MaxHR", "Oldpeak")])
@@ -115,7 +91,7 @@ kable(tab, caption = "5 num of numerical valies") %>%
 \newpage
 ## Visualisations  
 ### Datapoints per sex
-```{r Ratio male to female}
+```{r Ratio male to female, fig.align='center', out.width="65%", fig.cap="Ratio male to female"}
 # counts (or sums of weights)
 ggplot(heartdata) + 
   geom_bar(aes(Sex, fill=HeartDisease)) + 
@@ -129,7 +105,7 @@ As visible in the barplot, the ratio of female(`r round(p["F"] * 100, 2)`%) to m
 
 \newpage
 ### Histogram  
-```{r}
+```{r hist-age, echo = TRUE, fig.align='center', out.width="65%", fig.cap="Histogram of age grouped by HD diagnoses"}
 ggplot(heartdata, aes(Age, fill=HeartDisease)) + 
   geom_histogram(bins=12) + 
   geom_vline(aes(xintercept=mean(Age[HeartDisease==F]), colour="Mean age without HD"),  size=1, linetype="dashed") + 
@@ -144,7 +120,7 @@ As seen in the above graph, we can discover that there seems to be a relation be
 
 \newpage
 ### Heartdisease linked to age
-```{r heartdisease rate per age}
+```{r hr-age, out.width="65%", echo=TRUE, fig.align='center', fig.cap="Percentage of patients affected by HD by age"}
 ggplot(heartdata) + 
   geom_smooth(aes(Age, HeartDisease * 100), method="loess", formula = "y ~ x", color=hue_pal()(1), fill = hue_pal()(2)[2]) + 
   ylab("Heart Disease (%)") + 
@@ -156,7 +132,7 @@ ggplot(heartdata) +
 Using a Smooth line we can see that the percentage of patients with HD increases with age and declines after 65.
 The reason for decline might be that patients who have HD above the age of 65 will die earlier then healthy individuals. A short internet search will also confirm that HD is the leading cause of death for people above the age of 65. Underlying image provides further insight. Source: [ec.europa.eu](https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Causes_of_death_statistics_-_people_over_65)   
 
-```{r load image, echo=FALSE}
+```{r load image, echo=TRUE}
 # Define variable containing url
 url <- "https://ec.europa.eu/eurostat/statistics-explained/images/2/25/Major_causes_of_death%2C_EU-27%2C_2016_%28standardised_death_rates_per_100_000_inhabitants%29_Health20.png"
 ```
@@ -179,7 +155,7 @@ Pain type:
 
 \newpage   
 ### Chestpain and their outcome
-```{r}
+```{r chestpain-outcome, out.width="65%", echo=TRUE, fig.align='center', fig.cap="Ratio of diagnosis grouped by chestpain type"}
 ggplot(heartdata) +
   geom_bar(aes(ChestPainType, fill=HeartDisease)) + ggtitle("Chestpaintype outcome")
 ```
@@ -187,31 +163,30 @@ As visible in the above barplot, asymptomic pain (ASY) is the most frequently re
 
 \newpage
 ### Resting blood pressure split by pain type
-```{r}
+```{r chestpain-dense, out.width="65%", echo=TRUE, fig.align='center', fig.cap="Density plot of Resting BP by pain type"}
 p <- ggplot(heartdata, aes(x=RestingBP, group=ChestPainType, colour=ChestPainType)) + 
   geom_density() + 
   xlab("Resting BP (mm Hg)") + 
   ggtitle("Density plot of RestingBP split by ChestPainType")
 p
 ```
-\newline
 The type of pain an individual experiences doesn't seem to change the blood pressure of the individual.
 
 \newpage
 ### The effect of chestpain on cholesterol or vice versa
-```{r}
+```{r chest-paindense-chol, out.width="65%", echo=TRUE, fig.align='center', fig.cap="Density plot of cholesterol by pain type"}
 p <- ggplot(heartdata, aes(x=Cholesterol, group=ChestPainType, colour=ChestPainType)) + 
   geom_density() + 
   xlab("Cholesterol in serum (mm/dl)") + 
   ggtitle("Density plot of cholesterol in serum split by ChestPainType")
 p
 ```
-\newline
+
 As visible in the above plot. The type of chestpain doesn't seem to differ based on the concentration of cholesterol in blood.  
 
 \newpage
 ### Is the max heart rate affected by certain chestpain?
-```{r}
+```{r chestpain-dense-hr, out.width="65%", echo=TRUE, fig.align='center', fig.cap="Density plot of maxHR by pain type"}
 p <- ggplot(heartdata, aes(x=MaxHR, group=ChestPainType, colour=ChestPainType)) + 
   geom_density() + 
   xlab("Max heartrate") +  
@@ -222,7 +197,7 @@ p
 There seems to be a small gap in max heartrate with patients ASY (Asymptomatic) vs ATA (Atypical Angina).  
 \newpage
 ### Age vs MaxHR grouped by Sex  
-```{r Age/Sex vs MaxHR}
+```{r Age-Sex vs MaxHR, out.width="65%", echo=TRUE, fig.align='center', fig.cap="Max heartrate by sex and age"}
 ggplot(heartdata, aes(Age, MaxHR, group=Sex, colour = Sex)) + 
   geom_point(alpha=0.15) + geom_smooth(se=F) + ggtitle("Comparing MaxHR with age split by sex")
 ```
@@ -232,7 +207,7 @@ As expected MaxHR goes down with age. The female lines doesnt go down as expecte
 
 \newpage
 ### Density of ages split by sex
-```{r}
+```{r dens-sex, out.width="65%", echo=TRUE, fig.align='center', fig.cap="Amount of datapoints per age grouped by sex"}
 ggplot(heartdata) + 
   geom_density(aes(Age, colour=Sex, fill=Sex), alpha=0.05) + 
   ggtitle("Density plot comparing sexes")
@@ -242,7 +217,7 @@ The above graph shows that there is not much difference in age comparing male an
 
 \newpage  
 ### Finding correlation between MaxHR and HD
-```{r correlation}
+```{r correlation, out.width="65%", echo=TRUE, fig.align='center', fig.cap="Correlation between age and cholesterol"}
 ggplot(heartdata[heartdata$Cholesterol > 0,], aes(x=Age, y=Cholesterol, colour=HeartDisease, shape=ChestPainType)) + 
   geom_point() + 
   ggtitle("Age vs Cholesterol") + 
@@ -254,7 +229,7 @@ The amount of cholesterol increases slightly with age.
 \newpage
 ## PCA plotting
 
-```{r}
+```{r pca-bi, fig.align="center", out.width="50%", echo=TRUE, fig.cap="PCA Biplot of all non-categoral variables"}
 heartdata.active = heartdata[, c(1,4,5,6,8,13:16)]
 res.pca <- prcomp(heartdata.active, scale = TRUE)
 
@@ -264,6 +239,9 @@ fviz_pca_var(res.pca,
              repel = TRUE 
              )
 
+```
+
+```{r pca-var, fig.align="center", out.width="50%", echo=TRUE, fig.cap="PCA Variable plot of all non-categoral variables" }
 fviz_pca_biplot(res.pca,
                 col.var = "#2E9FDF", # Variables color
                 col.ind = heartdata$HeartDisease,
@@ -282,9 +260,9 @@ So far we can expect that age is the best variable in predicting HD as the perce
 
 ## Algorithms
 ```{r saving cleaned to file, eval=FALSE}
-
-# heartdata$ChestPainType <- NULL
-# heartdata$ST_Slope <- NULL
+write.csv(heartdata, "data/heart_cleaned_report.csv", sep=",", row.names = FALSE)
+heartdata$ChestPainType <- NULL
+heartdata$ST_Slope <- NULL
 
 heartdata$Cholesterol[heartdata$Cholesterol == 0] <- "?"
 heartdata$RestingBP[heartdata$RestingBP == 0] <- "?"
@@ -293,8 +271,8 @@ heartdata$Cholesterol <- as.integer(heartdata$Cholesterol)
 heartdata$RestingBP <- as.integer(heartdata$RestingBP)
 ## Set Heartdata as last column before exporting
 disease <- heartdata$HeartDisease
-# heartdata$HeartDisease <- NULL
-# heartdata$HeartDisease <- disease
+heartdata$HeartDisease <- NULL
+heartdata$HeartDisease <- disease
 write.arff(heartdata, "data/heart_cleaned.arff")
 write.csv(heartdata, "data/heart_cleaned.csv", sep=",", row.names = FALSE)
 ```
@@ -417,20 +395,20 @@ kable(ensemble[order(-accuracy),] , col.names = c("Key", "Algorithm", "Accuracy 
 ```
 Adaboost has a lower processing 
 ```{r}
-# roc.smplog.stand <- read.arff("data/roc/roc_simplelog_stand.arff")
-# roc.smplog.cost <- read.arff("data/roc/roc_simplelog_0120.arff")
-# 
-# colourss <- hue_pal()(3)
-# stand <- ggplot(roc.smplog.stand) + 
-#   geom_path(aes(x = `False Positive Rate`, y=`True Positive Rate`, color = Threshold), size=1.5) + scale_colour_gradient2(low = "orange" ,mid = "mediumvioletred" ,high = "purple", midpoint = 0.5) + labs(color="P value positive")
-# 
-# cost <- ggplot(roc.smplog.cost) + 
-#   geom_path(aes(x = `False Positive Rate`, y=`True Positive Rate`, color = Threshold), size=1.5) + scale_colour_gradient2(low = "orange" ,mid = "mediumvioletred" ,high = "purple", midpoint = 0.5) + labs(color="P value positive")
-# 
-# ggarrange(stand,cost,
-#           ncol = 2, nrow = 2,
-#           labels = c("A", "B"))
-# 
+roc.smplog.stand <- read.arff("data/roc/roc_simplelog_stand.arff")
+roc.smplog.cost <- read.arff("data/roc/roc_simplelog_0120.arff")
+
+colourss <- hue_pal()(3)
+stand <- ggplot(roc.smplog.stand) +
+  geom_path(aes(x = `False Positive Rate`, y=`True Positive Rate`, color = Threshold), size=1.5) + scale_colour_gradient2(low = "orange" ,mid = "mediumvioletred" ,high = "purple", midpoint = 0.5) + labs(color="P value positive")
+
+cost <- ggplot(roc.smplog.cost) +
+  geom_path(aes(x = `False Positive Rate`, y=`True Positive Rate`, color = Threshold), size=1.5) + scale_colour_gradient2(low = "orange" ,mid = "mediumvioletred" ,high = "purple", midpoint = 0.5) + labs(color="P value positive")
+
+ggarrange(stand,cost,
+          ncol = 2, nrow = 2,
+          labels = c("A", "B"))
+
 
 ```
 
@@ -475,3 +453,5 @@ This will result in an overall accuracy of 84.5%
 
 Since Adaboost m1 is used the data needs to be checked for large outliers as Adaboost tries to correct outliers and tries to prevent missclassification.
 Reducing the amount of attributes does not increase model accuracy.
+
+
